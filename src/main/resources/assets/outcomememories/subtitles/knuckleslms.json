@@ -1,0 +1,480 @@
+{
+  "entries": [
+    {
+      "text": "[red]C'mon, bring it![/]",
+      "duration": 30,
+      "scale": 1.5,
+      "backgroundColor": "rgba(150, 0, 0, 0.9)",
+      "position": "mid"
+    },
+    {
+      "pause": true,
+      "duration": 20
+    },
+    {
+      "text": "[red]How are you him, can you please explain it?[/]",
+      "duration": 45,
+      "scale": 1.1,
+      "backgroundColor": "rgba(100, 0, 0, 0.75)"
+    },
+    {
+      "text": "[red]No matter who you are, you just can not fake it[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[dark_red]Livin' on the edge of reality[/]",
+      "duration": 45,
+      "scale": 1.0,
+      "backgroundColor": "rgba(80, 0, 0, 0.7)"
+    },
+    {
+      "text": "[red]If you mess with my friends[/]",
+      "duration": 40,
+      "scale": 1.2
+    },
+    {
+      "text": "[red]You gonna mess with me[/]",
+      "duration": 40,
+      "scale": 1.3,
+      "backgroundColor": "rgba(120, 0, 0, 0.8)"
+    },
+    {
+      "text": "[dark_red]You destroy my home, you invade this land[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[red]Listen real close so you understand[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[red]I'm tougher than leather, we in this together[/]",
+      "duration": 45,
+      "scale": 1.2,
+      "backgroundColor": "rgba(140, 0, 0, 0.8)"
+    },
+    {
+      "text": "[yellow]You're never gonna win, team knuckles forever![/]",
+      "duration": 50,
+      "scale": 1.3,
+      "backgroundColor": "rgba(150, 100, 0, 0.85)"
+    },
+    {
+      "text": "[red]Pick up the pace, let me see what you got now[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[red]Keep it real short, this will end that's my vow[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[dark_red]No time for the fake, only real ones allowed[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[red]Stand in my way, watch me tear through the crowd[/]",
+      "duration": 45,
+      "scale": 1.2,
+      "backgroundColor": "rgba(130, 0, 0, 0.8)"
+    },
+    {
+      "text": "[gold]Left right, left right, left right, down[/]",
+      "duration": 40,
+      "scale": 1.3,
+      "backgroundColor": "rgba(180, 120, 0, 0.8)"
+    },
+    {
+      "text": "[gold]Left right, left right, left right, down![/]",
+      "duration": 40,
+      "scale": 1.4,
+      "backgroundColor": "rgba(200, 130, 0, 0.85)"
+    },
+    {
+      "text": "[red]You got another thing coming if you think I'll quit[/]",
+      "duration": 50,
+      "scale": 1.2,
+      "backgroundColor": "rgba(150, 0, 0, 0.8)"
+    },
+    {
+      "pause": true,
+      "duration": 20
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(160, 0, 0, 0.85)"
+    },
+    {
+      "text": "[dark_red]That primal rage[/]",
+      "duration": 40,
+      "scale": 1.3,
+      "backgroundColor": "rgba(100, 0, 0, 0.8)"
+    },
+    {
+      "text": "[red]It holds me back every day[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[dark_red]This urge with no release[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[red]Will you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(160, 0, 0, 0.85)"
+    },
+    {
+      "text": "[yellow]And show me what was taken[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[gold]Shaken[/]",
+      "duration": 30,
+      "scale": 1.3,
+      "backgroundColor": "rgba(180, 100, 0, 0.8)"
+    },
+    {
+      "text": "[red]That had made you this way[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(160, 0, 0, 0.85)"
+    },
+    {
+      "text": "[dark_red]That has held me back[/]",
+      "duration": 40,
+      "scale": 1.2
+    },
+    {
+      "text": "[red]Stopped me from seeing the way[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[yellow]But I won't hold back now[/]",
+      "duration": 45,
+      "scale": 1.3,
+      "backgroundColor": "rgba(150, 100, 0, 0.85)"
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(180, 0, 0, 0.9)"
+    },
+    {
+      "text": "[gold]So please just let this be the[/]",
+      "duration": 45,
+      "scale": 1.3
+    },
+    {
+      "text": "[gold]Way that I can honor their names[/]",
+      "duration": 50,
+      "scale": 1.4,
+      "backgroundColor": "rgba(200, 140, 0, 0.85)"
+    },
+    {
+      "pause": true,
+      "duration": 25
+    },
+    {
+      "text": "[red]You can't have it all, no matter how much you want it[/]",
+      "duration": 50,
+      "scale": 1.1,
+      "backgroundColor": "rgba(110, 0, 0, 0.75)"
+    },
+    {
+      "text": "[red]Some things in life, you just can't flaunt it[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[dark_red]I see through[/]",
+      "duration": 30,
+      "scale": 1.0
+    },
+    {
+      "text": "[red]No need for the frontin'[/]",
+      "duration": 40,
+      "scale": 1.1
+    },
+    {
+      "text": "[red]You need a mask, that's the only assumption[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[dark_red]The truth hits hard, but it's what you need[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[red]Stay steady on your grind, let your actions lead[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[red]No time for the fake, I'm too busy stayin' true[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[yellow]Keep it real[/]",
+      "duration": 25,
+      "scale": 1.3,
+      "backgroundColor": "rgba(150, 100, 0, 0.8)"
+    },
+    {
+      "text": "[yellow]Real[/]",
+      "duration": 20,
+      "scale": 1.4
+    },
+    {
+      "text": "[gold]Real![/]",
+      "duration": 25,
+      "scale": 1.6,
+      "backgroundColor": "rgba(200, 130, 0, 0.85)",
+      "position": "mid"
+    },
+    {
+      "text": "[red]Time's ticking low, let's go another round[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[red]Victory in sight, hear that champion sound[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[yellow]Fueling up the fire, you can't keep me down[/]",
+      "duration": 45,
+      "scale": 1.2,
+      "backgroundColor": "rgba(150, 100, 0, 0.8)"
+    },
+    {
+      "text": "[gold]Push past my limits turning fate all around[/]",
+      "duration": 45,
+      "scale": 1.3,
+      "backgroundColor": "rgba(180, 120, 0, 0.85)"
+    },
+    {
+      "text": "[gold]Left right, left right, left right, down[/]",
+      "duration": 40,
+      "scale": 1.4,
+      "backgroundColor": "rgba(200, 130, 0, 0.85)"
+    },
+    {
+      "text": "[gold]Left right, left right, left right, down![/]",
+      "duration": 40,
+      "scale": 1.5,
+      "backgroundColor": "rgba(220, 140, 0, 0.9)"
+    },
+    {
+      "text": "[red]If you think this is over you're wrong[/]",
+      "duration": 45,
+      "scale": 1.3,
+      "backgroundColor": "rgba(150, 0, 0, 0.85)"
+    },
+    {
+      "text": "[red]We're just getting started![/]",
+      "duration": 40,
+      "scale": 1.4,
+      "backgroundColor": "rgba(170, 0, 0, 0.9)"
+    },
+    {
+      "pause": true,
+      "duration": 20
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(170, 0, 0, 0.85)"
+    },
+    {
+      "text": "[dark_red]That primal rage[/]",
+      "duration": 40,
+      "scale": 1.4,
+      "backgroundColor": "rgba(110, 0, 0, 0.8)"
+    },
+    {
+      "text": "[red]It holds me back every day[/]",
+      "duration": 45,
+      "scale": 1.3
+    },
+    {
+      "text": "[dark_red]This urge with no release[/]",
+      "duration": 45,
+      "scale": 1.2
+    },
+    {
+      "text": "[red]Will you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(170, 0, 0, 0.85)"
+    },
+    {
+      "text": "[yellow]And show me what was taken[/]",
+      "duration": 45,
+      "scale": 1.3
+    },
+    {
+      "text": "[gold]Shaken[/]",
+      "duration": 30,
+      "scale": 1.4,
+      "backgroundColor": "rgba(180, 100, 0, 0.85)"
+    },
+    {
+      "text": "[red]That had made you this way[/]",
+      "duration": 45,
+      "scale": 1.3
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(170, 0, 0, 0.85)"
+    },
+    {
+      "text": "[dark_red]That has held me back[/]",
+      "duration": 40,
+      "scale": 1.3
+    },
+    {
+      "text": "[red]Stopped me from seeing the way[/]",
+      "duration": 45,
+      "scale": 1.3
+    },
+    {
+      "text": "[yellow]But I won't hold back now[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(160, 110, 0, 0.85)"
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.6,
+      "backgroundColor": "rgba(180, 0, 0, 0.9)"
+    },
+    {
+      "text": "[gold]So please just let this be the[/]",
+      "duration": 45,
+      "scale": 1.4
+    },
+    {
+      "text": "[gold]Way that I can honor their names[/]",
+      "duration": 50,
+      "scale": 1.5,
+      "backgroundColor": "rgba(210, 140, 0, 0.9)"
+    },
+    {
+      "pause": true,
+      "duration": 20
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.6,
+      "backgroundColor": "rgba(190, 0, 0, 0.9)"
+    },
+    {
+      "text": "[dark_red]That primal rage[/]",
+      "duration": 40,
+      "scale": 1.5,
+      "backgroundColor": "rgba(120, 0, 0, 0.85)"
+    },
+    {
+      "text": "[red]It holds me back every day[/]",
+      "duration": 45,
+      "scale": 1.4
+    },
+    {
+      "text": "[dark_red]This urge with no release[/]",
+      "duration": 45,
+      "scale": 1.3
+    },
+    {
+      "text": "[red]Will you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.6,
+      "backgroundColor": "rgba(190, 0, 0, 0.9)"
+    },
+    {
+      "text": "[yellow]And show me what was taken[/]",
+      "duration": 45,
+      "scale": 1.4
+    },
+    {
+      "text": "[gold]Shaken[/]",
+      "duration": 30,
+      "scale": 1.5,
+      "backgroundColor": "rgba(200, 110, 0, 0.9)"
+    },
+    {
+      "text": "[red]That had made you this way[/]",
+      "duration": 45,
+      "scale": 1.4
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.7,
+      "backgroundColor": "rgba(200, 0, 0, 0.95)"
+    },
+    {
+      "text": "[dark_red]That has held me back[/]",
+      "duration": 40,
+      "scale": 1.4
+    },
+    {
+      "text": "[red]Stopped me from seeing the way[/]",
+      "duration": 45,
+      "scale": 1.4
+    },
+    {
+      "text": "[yellow]But I won't hold back now[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(170, 120, 0, 0.9)"
+    },
+    {
+      "text": "[red]Can you feel the fury?[/]",
+      "duration": 45,
+      "scale": 1.8,
+      "backgroundColor": "rgba(200, 0, 0, 0.95)",
+      "position": "mid"
+    },
+    {
+      "text": "[gold]So please just let this be the[/]",
+      "duration": 45,
+      "scale": 1.5
+    },
+    {
+      "text": "[gold]Way that I can honor their names[/]",
+      "duration": 60,
+      "scale": 1.7,
+      "backgroundColor": "rgba(220, 150, 0, 0.95)",
+      "position": "mid"
+    },
+    {
+      "pause": true,
+      "duration": 100
+    }
+  ]
+}
