@@ -1,18 +1,32 @@
 {
   "blend": {
-    "func": "add",
+    "func": "replace",
     "srcrgb": "one",
-    "dstrgb": "one"
+    "dstrgb": "zero"
   },
   "vertex": "blit",
-  "fragment": "cosmicsafio:sapo",
+  "fragment": "outcomememories:god",
   "attributes": [ "Position" ],
   "samplers": [
     { "name": "DiffuseSampler" }
   ],
   "uniforms": [
-    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
-    { "name": "InSize", "type": "float", "count": 2,  "values": [ 1.0, 1.0 ] },
-    { "name": "OutSize", "type": "float", "count": 2,  "values": [ 1.0, 1.0 ] }
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16,
+      "values": [1.0,0.0,0.0,0.0, 0.0,1.0,0.0,0.0, 0.0,0.0,1.0,0.0, 0.0,0.0,0.0,1.0] },
+    { "name": "InSize", "type": "float", "count": 2, "values": [1.0,1.0] },
+    { "name": "OutSize", "type": "float", "count": 2, "values": [1.0,1.0] },
+
+    { "name": "u_time", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "u_frameTimeCounter", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "u_resolution", "type": "float", "count": 2, "values": [1920.0,1080.0] },
+    { "name": "toonLevels", "type": "float", "count": 1, "values": [2.0] },
+    { "name": "u_opacity", "type": "float", "count": 1, "values": [0.45] },
+    { "name": "u_refract_strength", "type": "float", "count": 1, "values": [0.008] },
+    { "name": "u_cellScale", "type": "float", "count": 1, "values": [3.5] },
+    { "name": "u_glassRoughness", "type": "float", "count": 1, "values": [0.12] },
+    { "name": "u_specularIntensity", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "u_distort_strength", "type": "float", "count": 1, "values": [0.012] },
+    { "name": "u_chromatic", "type": "float", "count": 1, "values": [0.25] },
+    { "name": "u_redTint", "type": "float", "count": 1, "values": [0.12] }
   ]
 }

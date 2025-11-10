@@ -1,4 +1,4 @@
-package pe.elb.outcomememories.client.overlays;
+package pe.elb.outcomememories.game;
 
 public enum PlayerTypeOM {
     SONIC,
@@ -7,5 +7,6 @@ public enum PlayerTypeOM {
     AMY,
     CREAM,
     EGGMAN,
-    X2011
+    X2011,
+    NONE
 }

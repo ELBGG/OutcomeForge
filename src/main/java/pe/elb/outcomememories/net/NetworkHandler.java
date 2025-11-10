@@ -5,32 +5,31 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
-import pe.elb.morphed.net.MorphPacket;
-import pe.elb.outcomememories.client.ActivableKeyManager;
-import pe.elb.outcomememories.client.overlays.CarryClientHandler;
+import pe.elb.outcomememories.client.cache.ClientPlayerData;
 import pe.elb.outcomememories.game.PlayerTypeOM;
-import pe.elb.outcomememories.net.packets.EscapeInputPacket;
-import pe.elb.outcomememories.net.packets.TrapStatePacket;
-import pe.elb.outcomememories.net.packets.TrapSyncPacket;
-import pe.elb.outcomememories.net.skills.amy.AttackKeyPacket;
-import pe.elb.outcomememories.net.skills.amy.ThrowHammerKeyPacket;
-import pe.elb.outcomememories.net.skills.cream.GlideAttemptPacket;
-import pe.elb.outcomememories.net.skills.cream.HealKeyPacket;
-import pe.elb.outcomememories.net.skills.cream.PacketCreamDash;
-import pe.elb.outcomememories.net.skills.exe.ChargeKeyPacket;
-import pe.elb.outcomememories.net.skills.exe.ExecutionerInvisibilityPacket;
-import pe.elb.outcomememories.net.skills.exe.ExecutionerTrickeryPacket;
+import pe.elb.outcomememories.game.game.PlayerRegistry;
+import pe.elb.outcomememories.net.packets.*;
+import pe.elb.outcomememories.net.skills.amy.*;
+import pe.elb.outcomememories.net.skills.cream.*;
+import pe.elb.outcomememories.net.skills.sonic.*;
 import pe.elb.outcomememories.net.skills.tails.*;
+import pe.elb.outcomememories.net.skills.eggman.*;
+import pe.elb.outcomememories.net.skills.knuckles.*;
+import pe.elb.outcomememories.net.skills.exe.*;
+
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Supplier;
+
+import static pe.elb.outcomememories.Outcomememories.LOGGER;
 
 public class NetworkHandler {
     private static final String PROTOCOL_VERSION = "1";
@@ -53,168 +52,125 @@ public class NetworkHandler {
                 RoleUpdatePacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
         );
-        
+
         CHANNEL.registerMessage(
                 nextId(),
-                MorphPacket.class,
-                MorphPacket::encode,
-                MorphPacket::decode,
-                MorphPacket::handle
+                AmySkillPacket.class,
+                AmySkillPacket::encode,
+                AmySkillPacket::decode,
+                AmySkillPacket::handle
         );
 
         CHANNEL.registerMessage(
                 nextId(),
-                AttackKeyPacket.class,
-                AttackKeyPacket::encode,
-                AttackKeyPacket::decode,
-                AttackKeyPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                ThrowHammerKeyPacket.class,
-                ThrowHammerKeyPacket::encode,
-                ThrowHammerKeyPacket::decode,
-                ThrowHammerKeyPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                GlideAttemptPacket.class,
-                GlideAttemptPacket::encode,
-                GlideAttemptPacket::decode,
-                GlideAttemptPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                HealKeyPacket.class,
-                HealKeyPacket::encode,
-                HealKeyPacket::decode,
-                HealKeyPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                PacketCreamDash.class,
-                PacketCreamDash::encode,
-                PacketCreamDash::decode,
-                PacketCreamDash::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                ChargeKeyPacket.class,
-                ChargeKeyPacket::encode,
-                ChargeKeyPacket::decode,
-                ChargeKeyPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                ExecutionerInvisibilityPacket.class,
-                ExecutionerInvisibilityPacket::encode,
-                ExecutionerInvisibilityPacket::decode,
-                ExecutionerInvisibilityPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                ExecutionerTrickeryPacket.class,
-                ExecutionerTrickeryPacket::encode,
-                ExecutionerTrickeryPacket::decode,
-                ExecutionerTrickeryPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
-        );
-        CHANNEL.registerMessage(
-                nextId(),
-                TrapStatePacket.class,
-                TrapStatePacket::encode,
-                TrapStatePacket::decode,
-                TrapStatePacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                AmySyncPacket.class,
+                AmySyncPacket::encode,
+                AmySyncPacket::decode,
+                AmySyncPacket::handle
         );
 
         CHANNEL.registerMessage(
                 nextId(),
-                EscapeInputPacket.class,
-                EscapeInputPacket::encode,
-                EscapeInputPacket::decode,
-                EscapeInputPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                CreamSkillPacket.class,
+                CreamSkillPacket::encode,
+                CreamSkillPacket::decode,
+                CreamSkillPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                TrapStatePacket.class,
-                TrapStatePacket::encode,
-                TrapStatePacket::decode,
-                TrapStatePacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                EggmanSkillPacket.class,
+                EggmanSkillPacket::encode,
+                EggmanSkillPacket::decode,
+                EggmanSkillPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                TrapSyncPacket.class,
-                TrapSyncPacket::encode,
-                TrapSyncPacket::decode,
-                TrapSyncPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                ExeSkillPacket.class,
+                ExeSkillPacket::encode,
+                ExeSkillPacket::decode,
+                ExeSkillPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                CarryStatePacket.class,
-                CarryStatePacket::encode,
-                CarryStatePacket::decode,
-                CarryStatePacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                ExeSyncPacket.class,
+                ExeSyncPacket::encode,
+                ExeSyncPacket::decode,
+                ExeSyncPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                GlideAscendPacket.class,
-                GlideAscendPacket::encode,
-                GlideAscendPacket::decode,
-                GlideAscendPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                KnucklesSkillPacket.class,
+                KnucklesSkillPacket::encode,
+                KnucklesSkillPacket::decode,
+                KnucklesSkillPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                GlideStartPacket.class,
-                GlideStartPacket::encode,
-                GlideStartPacket::decode,
-                GlideStartPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                SonicSkillPacket.class,
+                SonicSkillPacket::encode,
+                SonicSkillPacket::decode,
+                SonicSkillPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                GlideStopPacket.class,
-                GlideStopPacket::encode,
-                GlideStopPacket::decode,
-                GlideStopPacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                SonicSyncPacket.class,
+                SonicSyncPacket::encode,
+                SonicSyncPacket::decode,
+                SonicSyncPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                LaserCancelChargePacket.class,
-                LaserCancelChargePacket::encode,
-                LaserCancelChargePacket::decode,
-                LaserCancelChargePacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                TailsSkillPacket.class,
+                TailsSkillPacket::encode,
+                TailsSkillPacket::decode,
+                TailsSkillPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                LaserStartChargePacket.class,
-                LaserStartChargePacket::encode,
-                LaserStartChargePacket::decode,
-                LaserStartChargePacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                TailsSyncPacket.class,
+                TailsSyncPacket::encode,
+                TailsSyncPacket::decode,
+                TailsSyncPacket::handle
         );
+
         CHANNEL.registerMessage(
                 nextId(),
-                LaserFirePacket.class,
-                LaserFirePacket::encode,
-                LaserFirePacket::decode,
-                LaserFirePacket::handle,
-                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                CooldownSyncPacket.class,
+                CooldownSyncPacket::encode,
+                CooldownSyncPacket::decode,
+                CooldownSyncPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT) // Servidor -> Cliente
         );
+
+        CHANNEL.registerMessage(
+                nextId(),
+                LMSMusicPacket.class,
+                LMSMusicPacket::encode,
+                LMSMusicPacket::decode,
+                LMSMusicPacket::handle
+        );
+
+        CHANNEL.registerMessage(
+                nextId(),
+                LMSLyricsPacket.class,
+                LMSLyricsPacket::encode,
+                LMSLyricsPacket::decode,
+                LMSLyricsPacket::handle
+        );
+
+        CHANNEL.messageBuilder(LMSBeatZoomPacket.class, nextId())
+                .encoder(LMSBeatZoomPacket::encode)
+                .decoder(LMSBeatZoomPacket::decode)
+                .consumerMainThread(LMSBeatZoomPacket::handle)
+                .add();
 
 
     }
@@ -223,27 +179,31 @@ public class NetworkHandler {
         return packetId++;
     }
 
-    /**
-     * Envía al cliente la configuración del rol (Amy u otros)
-     */
     public static void sendRoleUpdate(ServerPlayer target, PlayerTypeOM type, boolean disableQ, boolean disableE, boolean disableF5, int cameraMode) {
-        CHANNEL.send(PacketDistributor.PLAYER.with(() -> target),
-                new RoleUpdatePacket(type, disableQ, disableE, disableF5, cameraMode));
+        LOGGER.info("[NetworkHandler] Enviando RoleUpdate para {} (tipo: {}) a TODOS",
+                target.getGameProfile().getName(), type);
+
+        CHANNEL.send(
+                PacketDistributor.ALL.noArg(),
+                new RoleUpdatePacket(target.getUUID(), type, disableQ, disableE, disableF5, cameraMode)
+        );
     }
 
     public static class RoleUpdatePacket {
+        private final UUID playerUUID; // ✅ NUEVO: UUID del jugador
         private final PlayerTypeOM type;
         private final boolean disableQ;
         private final boolean disableE;
         private final boolean disableF5;
         private final int cameraMode;
-        private final boolean isExecutionerMode; // ✅ nuevo campo opcional global
+        private final boolean isExecutionerMode;
 
-        public RoleUpdatePacket(PlayerTypeOM type, boolean disableQ, boolean disableE, boolean disableF5, int cameraMode) {
-            this(type, disableQ, disableE, disableF5, cameraMode, false);
+        public RoleUpdatePacket(UUID playerUUID, PlayerTypeOM type, boolean disableQ, boolean disableE, boolean disableF5, int cameraMode) {
+            this(playerUUID, type, disableQ, disableE, disableF5, cameraMode, false);
         }
 
-        public RoleUpdatePacket(PlayerTypeOM type, boolean disableQ, boolean disableE, boolean disableF5, int cameraMode, boolean isExecutionerMode) {
+        public RoleUpdatePacket(UUID playerUUID, PlayerTypeOM type, boolean disableQ, boolean disableE, boolean disableF5, int cameraMode, boolean isExecutionerMode) {
+            this.playerUUID = playerUUID;
             this.type = type;
             this.disableQ = disableQ;
             this.disableE = disableE;
@@ -253,59 +213,75 @@ public class NetworkHandler {
         }
 
         public static void encode(RoleUpdatePacket msg, FriendlyByteBuf buf) {
+            buf.writeUUID(msg.playerUUID); // ✅ NUEVO
             buf.writeEnum(msg.type);
             buf.writeBoolean(msg.disableQ);
             buf.writeBoolean(msg.disableE);
             buf.writeBoolean(msg.disableF5);
             buf.writeInt(msg.cameraMode);
-            buf.writeBoolean(msg.isExecutionerMode); // ✅ nuevo
+            buf.writeBoolean(msg.isExecutionerMode);
         }
 
         public static RoleUpdatePacket decode(FriendlyByteBuf buf) {
+            UUID playerUUID = buf.readUUID(); // ✅ NUEVO
             PlayerTypeOM type = buf.readEnum(PlayerTypeOM.class);
             boolean disableQ = buf.readBoolean();
             boolean disableE = buf.readBoolean();
             boolean disableF5 = buf.readBoolean();
             int cameraMode = buf.readInt();
             boolean isExecutionerMode = buf.readBoolean();
-            return new RoleUpdatePacket(type, disableQ, disableE, disableF5, cameraMode, isExecutionerMode);
+            return new RoleUpdatePacket(playerUUID, type, disableQ, disableE, disableF5, cameraMode, isExecutionerMode);
         }
 
         public static void handle(RoleUpdatePacket msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
                 if (FMLEnvironment.dist.isClient()) {
-                    var mc = Minecraft.getInstance();
-                    if (mc.player == null) return;
+                    Minecraft mc = Minecraft.getInstance();
+                    if (mc.level == null) return;
 
-                    // 1️⃣ Actualizar tipo del jugador local
-                    pe.elb.outcomememories.client.ClientPlayerData.setType(msg.type);
+                    LOGGER.info("[RoleUpdatePacket] Recibido - UUID: {}, Type: {}", msg.playerUUID, msg.type);
 
-                    // 2️⃣ Aplicar restricciones globales de teclas
-                    ActivableKeyManager.setQEnabled(!msg.disableQ);
-                    ActivableKeyManager.setEEnabled(!msg.disableE);
-                    ActivableKeyManager.setF5Enabled(!msg.disableF5);
+                    // ✅ Buscar el jugador en el mundo
+                    Player targetPlayer = mc.level.getPlayerByUUID(msg.playerUUID);
 
-                    // 3️⃣ Ajustar cámara
-                    mc.options.setCameraType(msg.cameraMode == 1
-                            ? net.minecraft.client.CameraType.THIRD_PERSON_BACK
-                            : net.minecraft.client.CameraType.FIRST_PERSON);
+                    if (targetPlayer != null) {
+                        LOGGER.info("[RoleUpdatePacket] Jugador encontrado: {}, actualizando PlayerRegistry",
+                                targetPlayer.getGameProfile().getName());
 
-                    // 4️⃣ Modo Executioner (o cualquier otro modo global)
-                    if (msg.isExecutionerMode) {
-                        pe.elb.outcomememories.client.ClientPlayerData.enableExecutionerMode(mc.player);
+                        PlayerRegistry.setPlayerType(targetPlayer, msg.type);
+
+                        if (targetPlayer == mc.player) {
+                            LOGGER.info("[RoleUpdatePacket] Es el jugador local, aplicando configuraciones");
+
+                            ClientPlayerData.setType(msg.type);
+
+
+                            // Ajustar cámara
+                            mc.options.setCameraType(msg.cameraMode == 1
+                                    ? net.minecraft.client.CameraType.THIRD_PERSON_BACK
+                                    : net.minecraft.client.CameraType.FIRST_PERSON);
+
+                            // Modo Executioner
+                            if (msg.isExecutionerMode) {
+                                ClientPlayerData.enableExecutionerMode(mc.player);
+                            } else {
+                                ClientPlayerData.disableExecutionerMode();
+                            }
+
+                            // Mensaje de confirmación
+                            mc.player.sendSystemMessage(Component.literal(
+                                    "§a✓ Rol sincronizado: §b" + msg.type.name()));
+                        } else {
+                            LOGGER.info("[RoleUpdatePacket] Jugador {} tiene tipo {} (otro jugador)",
+                                    targetPlayer.getGameProfile().getName(), msg.type);
+                        }
                     } else {
-                        pe.elb.outcomememories.client.ClientPlayerData.disableExecutionerMode();
+                        LOGGER.warn("[RoleUpdatePacket] Jugador con UUID {} no encontrado en el cliente (aún)",
+                                msg.playerUUID);
                     }
-
-                    // 5️⃣ Mensaje de confirmación
-                    mc.player.sendSystemMessage(Component.literal(
-                            "§7[ClientSync] Rol sincronizado: §b" + msg.type.name() +
-                                    (msg.isExecutionerMode ? " §c(Executioner Mode)" : "")));
                 }
             });
             ctx.get().setPacketHandled(true);
         }
     }
-
-
 }

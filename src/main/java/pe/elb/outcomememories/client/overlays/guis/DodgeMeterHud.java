@@ -1,10 +1,11 @@
-package pe.elb.outcomememories.client.overlays;
+package pe.elb.outcomememories.client.overlays.guis;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
+import pe.elb.outcomememories.client.cache.DodgeMeterClientCache;
 
 public class DodgeMeterHud {
 

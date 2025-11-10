@@ -1,0 +1,56 @@
+ {
+  "amylms": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "outcomememories:amylms",
+        "stream": true
+      }
+    ]
+  },
+  "creamlms": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "outcomememories:creamlms",
+        "stream": true
+      }
+    ]
+  },
+  "soniclms": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "outcomememories:soniclms",
+        "stream": true
+      }
+    ]
+  },
+  "tailslms": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "outcomememories:tailslms",
+        "stream": true
+      }
+    ]
+  },
+  "knuckleslms": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "outcomememories:knuckleslms",
+        "stream": true
+      }
+    ]
+  },
+  "eggmanlms": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "outcomememories:eggmanlms",
+        "stream": true
+      }
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-package pe.elb.outcomememories.client.renderer;
+package pe.elb.outcomememories.client.handlers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.CameraType;

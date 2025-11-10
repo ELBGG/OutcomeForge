@@ -1,6 +1,6 @@
-package pe.elb.outcomememories.client;
+package pe.elb.outcomememories.client.cache;
 
-import pe.elb.outcomememories.net.skills.exe.InvisibilityNearbySyncPacket;
+import pe.elb.outcomememories.net.skills.exe.ExeSyncPacket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class InvisibilityClientCache {
     
-    private static List<InvisibilityNearbySyncPacket.SurvivorInfo> nearbySurvivors = new ArrayList<>();
+    private static List<ExeSyncPacket.SurvivorInfo> nearbySurvivors = new ArrayList<>();
     private static boolean isInvisActive = false;
     
-    public static void updateNearbySurvivors(List<InvisibilityNearbySyncPacket.SurvivorInfo> survivors) {
+    public static void updateNearbySurvivors(List<ExeSyncPacket.SurvivorInfo> survivors) {
         nearbySurvivors = new ArrayList<>(survivors);
         isInvisActive = !survivors.isEmpty();
     }
     
-    public static List<InvisibilityNearbySyncPacket.SurvivorInfo> getNearbySurvivors() {
+    public static List<ExeSyncPacket.SurvivorInfo> getNearbySurvivors() {
         return new ArrayList<>(nearbySurvivors);
     }
     

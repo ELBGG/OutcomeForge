@@ -1,0 +1,60 @@
+{
+  "entries": [
+    {
+      "pause": true,
+      "duration": 110
+    },
+    {
+      "text": "[light_purple]I..[/]",
+      "duration": 25,
+      "scale": 1.4
+    },
+    {
+      "text": "[light_purple]Hear your whispers[/]",
+      "duration": 55,
+      "scale": 1.5
+    },
+    {
+      "text": "[light_purple]through the dark[/]",
+      "duration": 90,
+      "scale": 1.5
+    },
+    {
+      "text": "[light_purple]Your heart of[/]",
+      "duration": 50,
+      "scale": 1.5
+    },
+    {
+      "text": "[dark_purple]POI[/]",
+      "duration": 15,
+      "scale": 2.3
+    },
+    {
+      "text": "[dark_purple]POISON[/]",
+      "duration": 40,
+      "scale": 2.3
+    },
+    {
+      "pause": true,
+      "duration": 470
+    },
+    {
+      "text": "[light_purple]through the dark[/]",
+      "duration": 65,
+      "scale": 1.5
+    },
+    {
+      "text": "[light_purple]the[/]",
+      "duration": 15,
+      "scale": 1.5
+    },
+    {
+      "text": "[light_purple]DARK[/]",
+      "duration": 50,
+      "scale": 2.3
+    },
+    {
+      "stop": true
+    }
+  ]
+}

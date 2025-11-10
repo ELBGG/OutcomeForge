@@ -1,0 +1,512 @@
+{
+  "entries": [
+    {
+      "pause": true,
+      "duration": 40
+    },
+    {
+      "text": "[gray]Standing alone[/]",
+      "duration": 60,
+      "scale": 1.0
+    },
+    {
+      "text": "[gray]Standing just out of reach[/]",
+      "duration": 50,
+      "scale": 1.0
+    },
+    {
+      "text": "[gray]Foot on the brakes[/]",
+      "duration": 50,
+      "scale": 1.0
+    },
+    {
+      "text": "[gray]But I need to go on[/]",
+      "duration": 60,
+      "scale": 1.0
+    },
+    {
+      "text": "[gray]Day after day as I fall behind[/]",
+      "duration": 60,
+      "scale": 1.0
+    },
+    {
+      "text": "[gray]You keep me away from being who I am[/]",
+      "duration": 100,
+      "scale": 1.0
+    },
+    {
+      "text": "[blue]No more chains on[/]",
+      "duration": 60,
+      "scale": 1.2
+    },
+    {
+      "text": "[aqua]ME[/]",
+      "duration": 20,
+      "scale": 1.8
+    },
+    {
+      "pause": true,
+      "duration": 590
+    },
+    {
+      "text": "[aqua]Run around, feet planted on the ground[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[aqua]Yeah baby, feel that rhythm[/]",
+      "duration": 25,
+      "scale": 1.1
+    },
+    {
+      "text": "[blue]Break the speed of sound[/]",
+      "duration": 25,
+      "scale": 1.2
+    },
+    {
+      "text": "[aqua]So keep it rollin'[/]",
+      "duration": 30,
+      "scale": 1.0
+    },
+    {
+      "text": "[aqua]Yeah, never slow it down[/]",
+      "duration": 30,
+      "scale": 1.0
+    },
+    {
+      "text": "[aqua]Just keep it real[/]",
+      "duration": 60,
+      "scale": 1.0
+    },
+
+    {
+      "text": "[blue]Upside down[/]",
+      "duration": 25,
+      "scale": 1.1
+    },
+    {
+      "text": "[aqua]These limits are unbound[/]",
+      "duration": 25,
+      "scale": 1.1
+    },
+    {
+      "text": "[aqua]Yeah baby, faker than fake[/]",
+      "duration": 25,
+      "scale": 1.0
+    },
+    {
+      "text": "[aqua]You're for the background[/]",
+      "duration": 25,
+      "scale": 1.0
+    },
+    {
+      "text": "[aqua]So keep it rollin'[/]",
+      "duration": 30,
+      "scale": 1.0
+    },
+
+    {
+      "text": "[aqua]You'll never slow me down[/]",
+      "duration": 30,
+      "scale": 1.1
+    },
+    {
+      "text": "[blue]I am what's real[/]",
+      "duration": 60,
+      "scale": 1.2
+    },
+    {
+      "text": "[green]Hills of fading green[/]",
+      "duration": 80,
+      "scale": 1.0
+    },
+    {
+      "text": "[green]Unravel at the seam[/]",
+      "duration": 80,
+      "scale": 1.0
+    },
+    {
+      "text": "[yellow]Break me-[/]",
+      "duration": 55,
+      "scale": 1.3
+    },
+    {
+      "text": "[gold]FREE[/]",
+      "duration": 20,
+      "scale": 1.8
+    },
+    {
+      "pause": true,
+      "duration": 40
+    },
+    {
+      "text": "[aqua]RUNNING TILL THE END[/]",
+      "duration": 25,
+      "scale": 1.3
+    },
+    {
+      "text": "[blue]TURN THIS WORLD AROUND[/]",
+      "duration": 25,
+      "scale": 1.3
+    },
+    {
+      "text": "[red]I'M RISKING MY LIFE[/]",
+      "duration": 30,
+      "scale": 1.3
+    },
+    {
+      "text": "[yellow]FOR THESE FRIENDS I'VE FOUND[/]",
+      "duration": 30,
+      "scale": 1.3
+    },
+    {
+      "text": "[light_purple]HEAR THESE VOICES[/]",
+      "duration": 30,
+      "scale": 1.2
+    },
+    {
+      "text": "[light_purple]THAT CALL TO ME TO[/]",
+      "duration": 30,
+      "scale": 1.2
+    },
+    {
+      "text": "[aqua]BREAK AWAY AND TRY TO[/]",
+      "duration": 30,
+      "scale": 1.3
+    },
+    {
+      "text": "[blue]FIND MY WAY BACK![/]",
+      "duration": 30,
+      "scale": 1.4
+    },
+    {
+      "text": "[dark_red]TO THE HOME YOU TOOK FROM ME[/]",
+      "duration": 40,
+      "scale": 1.2
+    },
+    {
+      "text": "[gold]I'M EVERYTHING YOU WANT[/]",
+      "duration": 30,
+      "scale": 1.3
+    },
+    {
+      "text": "[gold]ALL YOU WANT TO BE[/]",
+      "duration": 25,
+      "scale": 1.3
+    },
+    {
+      "text": "[red]I WON'T EVER FALL DOWN[/]",
+      "duration": 50,
+      "scale": 1.3
+    },
+    {
+      "text": "[yellow]GIVE ME STRENGTH[/]",
+      "duration": 35,
+      "scale": 1.2
+    },
+    {
+      "text": "[gold]SO I CAN BREAK FREE[/]",
+      "duration": 50,
+      "scale": 2
+    },
+    {
+      "pause": true,
+      "duration": 480
+    },
+    {
+      "text": "[gray]Drag on[/]",
+      "duration": 20,
+      "scale": 1.0,
+      "backgroundColor": "rgba(50, 50, 50, 0.7)"
+    },
+    {
+      "text": "[gray]Keep it going till dawn[/]",
+      "duration": 25,
+      "scale": 1.0
+    },
+    {
+      "text": "[dark_gray]Escape the city[/]",
+      "duration": 25,
+      "scale": 1.0
+    },
+    {
+      "text": "[dark_gray]That just keeps me withdrawn[/]",
+      "duration": 30,
+      "scale": 1.0
+    },
+    {
+      "text": "[aqua]Yeah, don't you feel it?[/]",
+      "duration": 20,
+      "scale": 1.1
+    },
+    {
+      "text": "[dark_purple]Those sins moving through your[/]",
+      "duration": 40,
+      "scale": 1.1
+    },
+    {
+      "text": "[dark_purple]SPINE?[/]",
+      "duration": 30,
+      "scale": 2
+    },
+    {
+      "pause": true,
+      "duration": 25
+    },
+
+
+    {
+      "text": "[red]Hear that sound?[/]",
+      "duration": 25,
+      "scale": 1.2,
+      "backgroundColor": "rgba(120, 0, 0, 0.8)"
+    },
+    {
+      "text": "[aqua]Yeah, who cares how many[/]",
+      "duration": 25,
+      "scale": 1.0
+    },
+    {
+      "text": "[aqua]Of me there are, I'm[/]",
+      "duration": 25,
+      "scale": 1.0
+    },
+    {
+      "text": "[blue]The best one around[/]",
+      "duration": 25,
+      "scale": 1.2,
+      "backgroundColor": "rgba(0, 80, 160, 0.8)"
+    },
+    {
+      "text": "[aqua]We keep it rollin'[/]",
+      "duration": 30,
+      "scale": 1.0
+    },
+
+
+    {
+      "text": "[aqua]With this new strength I found[/]",
+      "duration": 45,
+      "scale": 1.1
+    },
+    {
+      "text": "[blue]I am what's real[/]",
+      "duration": 60,
+      "scale": 1.2,
+      "backgroundColor": "rgba(0, 70, 140, 0.8)"
+    },
+
+    {
+      "text": "[green]Hills of fading green[/]",
+      "duration": 80,
+      "scale": 1.0
+    },
+    {
+      "text": "[green]Unravel at the seam[/]",
+      "duration": 80,
+      "scale": 1.0
+    },
+    {
+      "text": "[yellow]Break me-[/]",
+      "duration": 55,
+      "scale": 1.3
+    },
+    {
+      "text": "[gold]FREE[/]",
+      "duration": 20,
+      "scale": 1.8
+    },
+    {
+      "pause": true,
+      "duration": 40
+    },
+    {
+      "text": "[aqua]RUNNING TILL THE END[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(0, 100, 150, 0.85)"
+    },
+    {
+      "text": "[blue]TURN THIS WORLD AROUND[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(0, 80, 160, 0.85)"
+    },
+    {
+      "text": "[red]I'M RISKING MY LIFE[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(150, 0, 0, 0.85)"
+    },
+    {
+      "text": "[yellow]FOR THESE FRIENDS I'VE FOUND[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(150, 150, 0, 0.85)"
+    },
+    {
+      "text": "[light_purple]HEAR THESE VOICES[/]",
+      "duration": 40,
+      "scale": 1.3
+    },
+    {
+      "text": "[light_purple]THAT CALL TO ME TO[/]",
+      "duration": 40,
+      "scale": 1.3
+    },
+    {
+      "text": "[aqua]BREAK AWAY AND TRY TO[/]",
+      "duration": 45,
+      "scale": 1.4
+    },
+    {
+      "text": "[blue]FIND MY WAY BACK![/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(0, 100, 200, 0.9)"
+    },
+    {
+      "text": "[dark_red]TO THE HOME YOU TOOK FROM ME[/]",
+      "duration": 50,
+      "scale": 1.3,
+      "backgroundColor": "rgba(100, 0, 0, 0.85)"
+    },
+    {
+      "text": "[gold]I'M EVERYTHING YOU WANT[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(200, 150, 0, 0.85)"
+    },
+    {
+      "text": "[gold]ALL YOU WANT TO BE[/]",
+      "duration": 45,
+      "scale": 1.4
+    },
+    {
+      "text": "[red]I WON'T EVER FALL DOWN[/]",
+      "duration": 45,
+      "scale": 1.4,
+      "backgroundColor": "rgba(180, 0, 0, 0.85)"
+    },
+    {
+      "text": "[yellow]GIVE ME STRENGTH[/]",
+      "duration": 40,
+      "scale": 1.3
+    },
+    {
+      "text": "[gold]SO I CAN BREAK FREE[/]",
+      "duration": 50,
+      "scale": 1.6,
+      "backgroundColor": "rgba(255, 170, 0, 0.9)",
+      "position": "mid"
+    },
+    {
+      "pause": true,
+      "duration": 30
+    },
+    {
+      "text": "[aqua]Running till the end[/]",
+      "duration": 45,
+      "scale": 1.2,
+      "backgroundColor": "rgba(0, 100, 150, 0.75)"
+    },
+    {
+      "text": "[blue]Turn this world around[/]",
+      "duration": 45,
+      "scale": 1.2,
+      "backgroundColor": "rgba(0, 80, 160, 0.75)"
+    },
+    {
+      "text": "[red]I'M RISKING MY LIFE[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(150, 0, 0, 0.85)"
+    },
+    {
+      "text": "[yellow]FOR THESE FRIENDS I'VE FOUND[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(150, 150, 0, 0.85)"
+    },
+    {
+      "text": "[light_purple]HEAR THESE VOICES[/]",
+      "duration": 40,
+      "scale": 1.4
+    },
+    {
+      "text": "[light_purple]THAT CALL TO ME TO[/]",
+      "duration": 40,
+      "scale": 1.4
+    },
+    {
+      "text": "[aqua]BREAK AWAY AND TRY TO[/]",
+      "duration": 45,
+      "scale": 1.5
+    },
+    {
+      "text": "[blue]FIND MY WAY BACK![/]",
+      "duration": 45,
+      "scale": 1.6,
+      "backgroundColor": "rgba(0, 100, 200, 0.9)"
+    },
+    {
+      "text": "[dark_red]TO THE HOME YOU TOOK FROM ME[/]",
+      "duration": 50,
+      "scale": 1.4,
+      "backgroundColor": "rgba(100, 0, 0, 0.85)"
+    },
+    {
+      "text": "[gold]I'M EVERYTHING YOU WANT[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(200, 150, 0, 0.85)"
+    },
+    {
+      "text": "[gold]ALL YOU WANT TO BE[/]",
+      "duration": 45,
+      "scale": 1.5
+    },
+    {
+      "text": "[red]I WON'T EVER FALL DOWN[/]",
+      "duration": 45,
+      "scale": 1.5,
+      "backgroundColor": "rgba(180, 0, 0, 0.85)"
+    },
+    {
+      "text": "[yellow]GIVE ME STRENGTH[/]",
+      "duration": 40,
+      "scale": 1.4
+    },
+    {
+      "text": "[gold]SO I CAN BREAK FREE[/]",
+      "duration": 50,
+      "scale": 1.7,
+      "backgroundColor": "rgba(255, 170, 0, 0.9)",
+      "position": "mid"
+    },
+    {
+      "text": "[gold]BREAK FREE[/]",
+      "duration": 40,
+      "scale": 1.8,
+      "backgroundColor": "rgba(255, 200, 0, 0.95)",
+      "position": "mid"
+    },
+    {
+      "text": "[yellow]BREAK FREE[/]",
+      "duration": 40,
+      "scale": 1.9,
+      "backgroundColor": "rgba(255, 220, 0, 0.95)",
+      "position": "mid"
+    },
+    {
+      "text": "[gold]OHHHHHH[/]",
+      "duration": 80,
+      "scale": 2.0,
+      "backgroundColor": "rgba(255, 170, 0, 1.0)",
+      "position": "mid"
+    },
+    {
+      "stop": true
+    }
+  ]
+}
