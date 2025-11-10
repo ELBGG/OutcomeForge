@@ -14,7 +14,6 @@ import pe.elb.outcomememories.net.NetworkHandler;
 @Mod(Outcomememories.MODID)
 public class Outcomememories {
 
-    // Define mod id in a common place for everything to reference
     public static final String MODID = "outcomememories";
     public static final Logger LOGGER = LoggerFactory.getLogger(Outcomememories.class);
 
