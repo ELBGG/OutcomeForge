@@ -642,6 +642,7 @@ public class AmySkillsSystem {
         }
     }
 
+
     public enum AmyMoveSet {
         HAMMER("amy_hammer", "hammer", KeyType.SECONDARY, "Hammer"),
         THROW("amy_throw", "throw", KeyType.PRIMARY, "Throw Hammer"),

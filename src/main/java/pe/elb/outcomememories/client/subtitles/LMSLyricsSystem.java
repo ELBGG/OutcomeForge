@@ -15,19 +15,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-/**
- * Sistema unificado de gestión de letras LMS
- * 
- * Maneja:
- * - Carga de archivos JSON desde assets
- * - Control de reproducción de letras
- * - Datos de subtítulos individuales
- */
+
 @OnlyIn(Dist.CLIENT)
 public class LMSLyricsSystem {
 
-    // ============ SINGLETON ============
-    
     private static final LMSLyricsSystem INSTANCE = new LMSLyricsSystem();
     private static final Gson GSON = new GsonBuilder().create();
 
@@ -35,8 +26,6 @@ public class LMSLyricsSystem {
         return INSTANCE;
     }
 
-    // ============ ESTADO DEL SISTEMA ============
-    
     private final Map<PlayerTypeOM, String> lyricsFiles = new HashMap<>();
     private final Map<PlayerTypeOM, LyricsFile> loadedLyrics = new HashMap<>();
 
@@ -45,20 +34,16 @@ public class LMSLyricsSystem {
     private boolean isPlaying = false;
 
     private LMSLyricsSystem() {
-        // Mapeo de personajes a archivos
         lyricsFiles.put(PlayerTypeOM.AMY, "amylms");
         lyricsFiles.put(PlayerTypeOM.SONIC, "soniclms");
         lyricsFiles.put(PlayerTypeOM.TAILS, "tailslms");
         lyricsFiles.put(PlayerTypeOM.KNUCKLES, "knuckleslms");
         lyricsFiles.put(PlayerTypeOM.CREAM, "creamlms");
         lyricsFiles.put(PlayerTypeOM.EGGMAN, "eggmanlms");
+        lyricsFiles.put(PlayerTypeOM.BLAZE, "blazelms");
+        lyricsFiles.put(PlayerTypeOM.METAL_SONIC, "metalsoniclms");
     }
 
-    // ============ CARGA DE LETRAS ============
-
-    /**
-     * Carga los archivos de letras desde resources
-     */
     public void loadLyrics(ResourceManager resourceManager) {
         System.out.println("[LMSLyrics] Cargando archivos de letras...");
 
@@ -103,11 +88,6 @@ public class LMSLyricsSystem {
         System.out.println("[LMSLyrics] Resumen: " + loaded + "/" + lyricsFiles.size() + " archivos cargados");
     }
 
-    // ============ CONTROL DE REPRODUCCIÓN ============
-
-    /**
-     * Inicia la reproducción de letras para un personaje
-     */
     public void startLyrics(PlayerTypeOM character) {
         LyricsFile lyricsFile = loadedLyrics.get(character);
 
@@ -125,9 +105,6 @@ public class LMSLyricsSystem {
                 " (" + currentLyrics.size() + " entradas)");
     }
 
-    /**
-     * Inicia las letras por nombre de archivo (usado por el packet)
-     */
     public void startLyricsByFileName(String fileName) {
         ResourceManager resourceManager = net.minecraft.client.Minecraft.getInstance().getResourceManager();
 
@@ -167,9 +144,6 @@ public class LMSLyricsSystem {
         }
     }
 
-    /**
-     * Detiene las letras
-     */
     public void stopLyrics() {
         isPlaying = false;
         currentLyrics = null;
@@ -179,9 +153,6 @@ public class LMSLyricsSystem {
         System.out.println("[LMSLyrics] Letras detenidas");
     }
 
-    /**
-     * Tick del sistema
-     */
     public void tick() {
         if (!isPlaying || currentLyrics == null) {
             return;
@@ -189,22 +160,17 @@ public class LMSLyricsSystem {
 
         LMSLyricsRenderer.getInstance().tick();
 
-        // Si el subtítulo actual terminó, mostrar el siguiente
         if (LMSLyricsRenderer.getInstance().getCurrentSubtitle() == null) {
             showNextLyric();
         }
     }
 
-    /**
-     * Muestra la siguiente lírica
-     */
     private void showNextLyric() {
         if (currentLyrics == null || currentLyrics.isEmpty()) {
             return;
         }
 
         if (currentIndex >= currentLyrics.size()) {
-            // Si llegamos al final, verificar si la última entrada es un stop
             if (!currentLyrics.isEmpty()) {
                 LyricEntry lastEntry = currentLyrics.get(currentLyrics.size() - 1);
                 if (lastEntry.isStop()) {
@@ -213,29 +179,24 @@ public class LMSLyricsSystem {
                     return;
                 }
             }
-
-            // Loop: volver al inicio
             currentIndex = 0;
         }
 
         LyricEntry entry = currentLyrics.get(currentIndex);
         currentIndex++;
 
-        // Si es un stop, detener la reproducción
         if (entry.isStop()) {
             stopLyrics();
             System.out.println("[LMSLyrics] Reproducción detenida (stop)");
             return;
         }
 
-        // Si es una pausa, crear subtítulo invisible
         if (entry.isPause()) {
             Subtitle pauseSubtitle = new Subtitle("", entry.getDuration());
             LMSLyricsRenderer.getInstance().showSubtitle(pauseSubtitle);
             return;
         }
 
-        // Crear y configurar subtítulo
         Subtitle subtitle = new Subtitle(entry.getText(), entry.getDuration());
         subtitle.setMetadata("textScale", entry.getScale());
         subtitle.setMetadata("position", entry.getPosition());
@@ -247,8 +208,6 @@ public class LMSLyricsSystem {
         LMSLyricsRenderer.getInstance().showSubtitle(subtitle);
     }
 
-    // ============ UTILIDADES ============
-
     public boolean isPlaying() {
         return isPlaying;
     }
@@ -258,11 +217,6 @@ public class LMSLyricsSystem {
         stopLyrics();
     }
 
-    // ============ CLASE INTERNA: SUBTITLE ============
-
-    /**
-     * Representa un subtítulo LMS con metadata
-     */
     public static class Subtitle {
         private final String text;
         private final int durationTicks;
@@ -304,17 +258,8 @@ public class LMSLyricsSystem {
         public <T> T getMetadata(String key, T defaultValue) {
             return (T) metadata.getOrDefault(key, defaultValue);
         }
-
-        public boolean hasMetadata(String key) {
-            return metadata.containsKey(key);
-        }
     }
 
-    // ============ CLASE INTERNA: LYRICS FILE ============
-
-    /**
-     * Estructura de archivo JSON de letras
-     */
     public static class LyricsFile {
         @SerializedName("entries")
         private List<LyricEntry> entries;
@@ -324,9 +269,6 @@ public class LMSLyricsSystem {
         }
     }
 
-    /**
-     * Entrada individual de letra
-     */
     public static class LyricEntry {
         @SerializedName("text")
         private String text;

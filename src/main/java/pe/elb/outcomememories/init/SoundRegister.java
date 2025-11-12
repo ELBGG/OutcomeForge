@@ -25,6 +25,8 @@ public final class SoundRegister {
     public static final RegistryObject<SoundEvent> KNUCKLES_LMS = registerSound("knuckleslms");
     public static final RegistryObject<SoundEvent> EGGMAN_LMS = registerSound("eggmanlms");
     public static final RegistryObject<SoundEvent> SONIC_LSM = registerSound("soniclms");
+    public static final RegistryObject<SoundEvent> BLAZE_LMS = registerSound("blazelms");
+    public static final RegistryObject<SoundEvent> METALSONIC_LMS = registerSound("metalsoniclms");
 
     private SoundRegister() {}
 }

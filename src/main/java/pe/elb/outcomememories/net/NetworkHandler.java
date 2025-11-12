@@ -17,7 +17,11 @@ import pe.elb.outcomememories.game.PlayerTypeOM;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.net.packets.*;
 import pe.elb.outcomememories.net.skills.amy.*;
+import pe.elb.outcomememories.net.skills.blaze.BlazeSkillPacket;
+import pe.elb.outcomememories.net.skills.blaze.BlazeSyncPacket;
 import pe.elb.outcomememories.net.skills.cream.*;
+import pe.elb.outcomememories.net.skills.metalsonic.MetalSonicSkillPacket;
+import pe.elb.outcomememories.net.skills.metalsonic.MetalSonicSyncPacket;
 import pe.elb.outcomememories.net.skills.sonic.*;
 import pe.elb.outcomememories.net.skills.tails.*;
 import pe.elb.outcomememories.net.skills.eggman.*;
@@ -87,6 +91,14 @@ public class NetworkHandler {
 
         CHANNEL.registerMessage(
                 nextId(),
+                EggmanSyncPacket.class,
+                EggmanSyncPacket::encode,
+                EggmanSyncPacket::decode,
+                EggmanSyncPacket::handle
+        );
+
+        CHANNEL.registerMessage(
+                nextId(),
                 ExeSkillPacket.class,
                 ExeSkillPacket::encode,
                 ExeSkillPacket::decode,
@@ -139,6 +151,38 @@ public class NetworkHandler {
                 TailsSyncPacket::encode,
                 TailsSyncPacket::decode,
                 TailsSyncPacket::handle
+        );
+
+        CHANNEL.registerMessage(
+                nextId(),
+                MetalSonicSyncPacket.class,
+                MetalSonicSyncPacket::encode,
+                MetalSonicSyncPacket::decode,
+                MetalSonicSyncPacket::handle
+        );
+
+        CHANNEL.registerMessage(
+                nextId(),
+                MetalSonicSkillPacket.class,
+                MetalSonicSkillPacket::encode,
+                MetalSonicSkillPacket::decode,
+                MetalSonicSkillPacket::handle
+        );
+
+        CHANNEL.registerMessage(
+                nextId(),
+                BlazeSkillPacket.class,
+                BlazeSkillPacket::encode,
+                BlazeSkillPacket::decode,
+                BlazeSkillPacket::handle
+        );
+
+        CHANNEL.registerMessage(
+                nextId(),
+                BlazeSyncPacket.class,
+                BlazeSyncPacket::encode,
+                BlazeSyncPacket::decode,
+                BlazeSyncPacket::handle
         );
 
         CHANNEL.registerMessage(

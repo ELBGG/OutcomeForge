@@ -22,7 +22,6 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import pe.elb.outcomememories.client.input.KeyBindings;
 import pe.elb.outcomememories.game.PlayerTypeOM;
-import pe.elb.outcomememories.game.game.PlayerDefineSuvivor;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.net.NetworkHandler;
 import pe.elb.outcomememories.net.packets.CooldownSyncPacket;
@@ -203,7 +202,7 @@ public class CreamSkillsSystem {
     public static boolean startGlide(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.CREAM) return false;
 
         if (player.onGround()) return false;

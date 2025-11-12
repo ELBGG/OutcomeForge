@@ -10,13 +10,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import pe.elb.outcomememories.client.handlers.CooldownManager;
 import pe.elb.outcomememories.game.PlayerTypeOM;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
-import pe.elb.outcomememories.game.skills.AmySkillsSystem;
-import pe.elb.outcomememories.game.skills.CreamSkillsSystem;
-import pe.elb.outcomememories.game.skills.EggmanSkillsSystem;
-import pe.elb.outcomememories.game.skills.X2011SkillsSystem;
-import pe.elb.outcomememories.game.skills.KnucklesSkillsSystem;
-import pe.elb.outcomememories.game.skills.SonicSkillsSystem;
-import pe.elb.outcomememories.game.skills.TailsSkillsSystem;
+import pe.elb.outcomememories.game.skills.*;
 
 import java.util.Locale;
 
@@ -56,6 +50,8 @@ public class PlayerAttacksSetHud implements IGuiOverlay {
             case KNUCKLES -> renderMoves(mc, guiGraphics, KnucklesSkillsSystem.KnucklesMoveSet.values(), screenWidth, screenHeight);
             case TAILS -> renderMoves(mc, guiGraphics, TailsSkillsSystem.TailsMoveSet.values(), screenWidth, screenHeight);
             case X2011 -> renderMoves(mc, guiGraphics, X2011SkillsSystem.ExeMoveSet.values(), screenWidth, screenHeight);
+            case BLAZE -> renderMoves(mc , guiGraphics, BlazeSkillsSystem.BlazeMoveSet.values(), screenWidth, screenHeight);
+            case METAL_SONIC -> renderMoves(mc , guiGraphics, MetalSonicSkillsSystem.MetalSonicMoveSet.values(), screenWidth, screenHeight);
             default -> {}
         }
     }
@@ -111,6 +107,21 @@ public class PlayerAttacksSetHud implements IGuiOverlay {
                 tex = xms.getTexture();
                 key = xms.getKeybind();
                 display = xms.getDisplayName();
+            } else if (move instanceof BlazeSkillsSystem.BlazeMoveSet bms) {
+                id = bms.getId();
+                tex = bms.getTexture();
+                key = bms.getKeybind();
+                display = bms.getDisplayName();
+            } else if (move instanceof MetalSonicSkillsSystem.MetalSonicMoveSet mms) {
+                id = mms.getId();
+                tex = mms.getTexture();
+                key = mms.getKeybind();
+                display = mms.getDisplayName();
+            } else if (move instanceof BlazeSkillsSystem.BlazeMoveSet mms) {
+                id = mms.getId();
+                tex = mms.getTexture();
+                key = mms.getKeybind();
+                display = mms.getDisplayName();
             }
 
             if (tex == null) continue;

@@ -1,6 +1,5 @@
 package pe.elb.outcomememories.game.game;
 
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import pe.elb.outcomememories.game.PlayerTypeOM;
@@ -10,67 +9,40 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Registro optimizado de definiciones de jugador.
- * Funciona tanto en servidor como en cliente.
- */
 public class PlayerRegistry {
 
-    private static final Map<UUID, PlayerDefineSuvivor> registry = new ConcurrentHashMap<>();
+    private static final Map<UUID, PlayerDefinition> registry = new ConcurrentHashMap<>();
+    private static final Map<UUID, PlayerTypeOM> previousRoles = new ConcurrentHashMap<>();
+    private static final Map<UUID, Long> lastSwapTime = new ConcurrentHashMap<>();
 
-    // ============================================
-    // MÉTODOS DE ESCRITURA (SET)
-    // ============================================
+    private static final float LOW_HEALTH_THRESHOLD = 8.0F;
+    private static final long SWAP_COOLDOWN_MS = 2000L;
 
-    /**
-     * Asigna un tipo al jugador (SERVIDOR)
-     */
     public static void setPlayerType(ServerPlayer player, PlayerTypeOM type) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(type, "type");
 
-        PlayerDefineSuvivor def = (type == PlayerTypeOM.AMY)
-                ? PlayerDefineSuvivor.forAmy(player)
-                : new PlayerDefineSuvivor(player, type);
-
+        PlayerDefinition def = new PlayerDefinition(player, type);
         registry.put(player.getUUID(), def);
     }
 
-    /**
-     * ✅ Asigna un tipo desde Player genérico (CLIENTE)
-     */
     public static void setPlayerType(Player player, PlayerTypeOM type) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(type, "type");
 
-        // Usar el factory method que acepta Player genérico
-        PlayerDefineSuvivor def = PlayerDefineSuvivor.fromPlayer(player, type);
+        PlayerDefinition def = PlayerDefinition.fromPlayer(player, type);
         registry.put(player.getUUID(), def);
     }
 
-    /**
-     * ✅ Asigna un tipo solo por UUID (cuando el jugador no está cargado en cliente)
-     */
     public static void setPlayerTypeByUUID(UUID playerUUID, PlayerTypeOM type) {
         Objects.requireNonNull(playerUUID, "playerUUID");
         Objects.requireNonNull(type, "type");
 
-        PlayerDefineSuvivor def = PlayerDefineSuvivor.forClient(playerUUID, type);
+        PlayerDefinition def = PlayerDefinition.forClient(playerUUID, type);
         registry.put(playerUUID, def);
     }
 
-    // ============================================
-    // MÉTODOS DE LECTURA (GET TYPE)
-    // ============================================
-
-    /**
-     * Obtiene el tipo de jugador (sobrecarga para todos los casos)
-     */
     public static PlayerTypeOM getPlayerType(ServerPlayer player) {
-        return player != null ? getPlayerType(player.getUUID()) : null;
-    }
-
-    public static PlayerTypeOM getPlayerType(LocalPlayer player) {
         return player != null ? getPlayerType(player.getUUID()) : null;
     }
 
@@ -78,94 +50,149 @@ public class PlayerRegistry {
         return player != null ? getPlayerType(player.getUUID()) : null;
     }
 
-    /**
-     * ✅ Método base: obtiene tipo por UUID (todos los demás llaman a este)
-     */
     public static PlayerTypeOM getPlayerType(UUID playerUUID) {
-        PlayerDefineSuvivor def = registry.get(playerUUID);
+        PlayerDefinition def = registry.get(playerUUID);
         return def != null ? def.getType() : null;
     }
 
-    // ============================================
-    // MÉTODOS DE ACCESO COMPLETO (GET DEFINITION)
-    // ============================================
-
-    /**
-     * Obtiene la definición completa (solo útil en servidor)
-     */
-    public static PlayerDefineSuvivor get(ServerPlayer player) {
+    public static PlayerDefinition get(ServerPlayer player) {
         return player != null ? registry.get(player.getUUID()) : null;
     }
 
-    /**
-     * ✅ Obtiene la definición por UUID
-     */
-    public static PlayerDefineSuvivor get(UUID playerUUID) {
+    public static PlayerDefinition get(UUID playerUUID) {
         return registry.get(playerUUID);
     }
 
-    // ============================================
-    // MÉTODOS DE ELIMINACIÓN (REMOVE)
-    // ============================================
-
-    /**
-     * Elimina la definición de un jugador
-     */
     public static void remove(ServerPlayer player) {
         if (player != null) {
-            registry.remove(player.getUUID());
+            remove(player.getUUID());
         }
     }
 
-    /**
-     * ✅ Elimina por UUID
-     */
     public static void remove(UUID playerUUID) {
         if (playerUUID != null) {
             registry.remove(playerUUID);
+            previousRoles.remove(playerUUID);
+            lastSwapTime.remove(playerUUID);
         }
     }
 
-    // ============================================
-    // MÉTODOS DE VERIFICACIÓN (HAS/EXISTS)
-    // ============================================
-
-    /**
-     * Verifica si existe una definición para el jugador
-     */
     public static boolean has(ServerPlayer player) {
         return player != null && registry.containsKey(player.getUUID());
     }
 
-    /**
-     * ✅ Verifica por UUID
-     */
     public static boolean has(UUID playerUUID) {
         return playerUUID != null && registry.containsKey(playerUUID);
     }
 
-    // ============================================
-    // MÉTODOS DE UTILIDAD
-    // ============================================
-
-    /**
-     * ✅ Limpia todo el registro
-     */
     public static void clear() {
         registry.clear();
+        previousRoles.clear();
+        lastSwapTime.clear();
     }
 
-    /**
-     * ✅ Tamaño del registro (para debug)
-     */
     public static int size() {
         return registry.size();
     }
 
-    /**
-     * ✅ Verifica si el registro está vacío
-     */
     public static boolean isEmpty() {
         return registry.isEmpty();
+    }
+
+    public static void savePreviousRole(UUID playerUUID, PlayerTypeOM type) {
+        previousRoles.put(playerUUID, type);
+    }
+
+    public static PlayerTypeOM getPreviousRole(UUID playerUUID) {
+        return previousRoles.get(playerUUID);
+    }
+
+    public static void cleanup(UUID playerUUID) {
+        remove(playerUUID);
+    }
+
+    public static void cleanupAll() {
+        clear();
+    }
+
+    public static class PlayerDefinition {
+        private final ServerPlayer serverPlayer;
+        private final UUID playerUUID;
+        private final PlayerTypeOM type;
+
+        public PlayerDefinition(ServerPlayer player, PlayerTypeOM type) {
+            this.serverPlayer = Objects.requireNonNull(player, "player");
+            this.playerUUID = player.getUUID();
+            this.type = Objects.requireNonNull(type, "type");
+        }
+
+        private PlayerDefinition(UUID playerUUID, PlayerTypeOM type) {
+            this.serverPlayer = null;
+            this.playerUUID = Objects.requireNonNull(playerUUID, "playerUUID");
+            this.type = Objects.requireNonNull(type, "type");
+        }
+
+        public static PlayerDefinition forAmy(ServerPlayer player) {
+            return new PlayerDefinition(player, PlayerTypeOM.AMY);
+        }
+
+        public static PlayerDefinition forClient(UUID playerUUID, PlayerTypeOM type) {
+            return new PlayerDefinition(playerUUID, type);
+        }
+
+        public static PlayerDefinition fromPlayer(Player player, PlayerTypeOM type) {
+            if (player instanceof ServerPlayer) {
+                return new PlayerDefinition((ServerPlayer) player, type);
+            } else {
+                return new PlayerDefinition(player.getUUID(), type);
+            }
+        }
+
+        public ServerPlayer getPlayer() {
+            return serverPlayer;
+        }
+
+        public PlayerTypeOM getType() {
+            return type;
+        }
+
+        public UUID getUuid() {
+            return playerUUID;
+        }
+
+        public boolean isServerSide() {
+            return serverPlayer != null;
+        }
+
+        public boolean isClientSide() {
+            return serverPlayer == null;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            PlayerDefinition that = (PlayerDefinition) o;
+            return Objects.equals(playerUUID, that.playerUUID);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(playerUUID);
+        }
+
+        @Override
+        public String toString() {
+            String playerName = serverPlayer != null
+                    ? serverPlayer.getGameProfile().getName()
+                    : playerUUID.toString();
+
+            return "PlayerDefinition{" +
+                    "player=" + playerName +
+                    ", type=" + type +
+                    ", side=" + (isServerSide() ? "SERVER" : "CLIENT") +
+                    '}';
+        }
     }
 }

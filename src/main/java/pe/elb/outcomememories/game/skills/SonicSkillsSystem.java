@@ -24,7 +24,6 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 import pe.elb.outcomememories.Outcomememories;
 import pe.elb.outcomememories.client.input.KeyBindings;
 import pe.elb.outcomememories.game.PlayerTypeOM;
-import pe.elb.outcomememories.game.game.PlayerDefineSuvivor;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.net.NetworkHandler;
 import pe.elb.outcomememories.net.packets.CooldownSyncPacket;
@@ -94,7 +93,7 @@ public class SonicSkillsSystem {
     public static boolean tryUseDropdash(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.SONIC) return false;
 
         UUID puid = player.getUUID();
@@ -141,7 +140,7 @@ public class SonicSkillsSystem {
     public static boolean tryUsePeelout(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.SONIC) return false;
 
         UUID puid = player.getUUID();
@@ -267,7 +266,7 @@ public class SonicSkillsSystem {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (player.level().isClientSide) return;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.SONIC) return;
 
         UUID puid = player.getUUID();
@@ -601,7 +600,8 @@ public class SonicSkillsSystem {
 
         // Aplicar velocidad
         Vec3 look = player.getLookAngle().normalize();
-        Vec3 dash = new Vec3(look.x * PEELOUT_DASH_SPEED, 0, look.z * PEELOUT_DASH_SPEED);
+        Vec3 currrentVel = player.getDeltaMovement();
+        Vec3 dash = new Vec3(look.x * PEELOUT_DASH_SPEED, currrentVel.y, look.z * PEELOUT_DASH_SPEED);
         player.setDeltaMovement(dash);
         player.hurtMarked = true;
 
@@ -732,7 +732,7 @@ public class SonicSkillsSystem {
     }
 
     private static boolean canBeCarried(ServerPlayer player) {
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null) return false;
 
         PlayerTypeOM type = def.getType();
@@ -798,7 +798,7 @@ public class SonicSkillsSystem {
     private static boolean isLastSurvivor(ServerPlayer player) {
         long survivorCount = player.getServer().getPlayerList().getPlayers().stream()
                 .filter(p -> {
-                    PlayerDefineSuvivor def = PlayerRegistry.get(p);
+                    PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(p);
                     return def != null && def.getType() != PlayerTypeOM.X2011 && p.isAlive();
                 })
                 .count();

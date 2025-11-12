@@ -21,7 +21,6 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 import pe.elb.outcomememories.Outcomememories;
 import pe.elb.outcomememories.client.input.KeyBindings;
 import pe.elb.outcomememories.game.PlayerTypeOM;
-import pe.elb.outcomememories.game.game.PlayerDefineSuvivor;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.net.NetworkHandler;
 import pe.elb.outcomememories.net.packets.CooldownSyncPacket;
@@ -85,7 +84,7 @@ public class TailsSkillsSystem {
     public static boolean tryUseGlide(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.TAILS) return false;
 
         UUID puid = player.getUUID();
@@ -157,7 +156,7 @@ public class TailsSkillsSystem {
     public static boolean tryUseLaser(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.TAILS) return false;
 
         UUID puid = player.getUUID();
@@ -244,7 +243,7 @@ public class TailsSkillsSystem {
         if (!(event.player instanceof ServerPlayer player)) return;
         if (player.level().isClientSide) return;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.TAILS) return;
 
         UUID puid = player.getUUID();
@@ -603,14 +602,13 @@ public class TailsSkillsSystem {
 
     private static boolean isExecutioner(LivingEntity entity) {
         if (entity instanceof ServerPlayer player) {
-            PlayerDefineSuvivor def = PlayerRegistry.get(player);
+            PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
             return def != null && def.getType() == PlayerTypeOM.X2011;
         }
         return false;
     }
 
     private static boolean isInLastThreeMinutes(ServerPlayer player) {
-        // TODO: Integrar con timer de partida
         return false;
     }
 

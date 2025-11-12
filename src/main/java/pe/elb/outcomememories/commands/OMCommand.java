@@ -48,7 +48,7 @@ public class OMCommand {
                 // ========== /om start ==========
                 .then(Commands.literal("start")
                     .executes(context -> {
-                        boolean success = GameSystem.startGame();
+                        boolean success = OutcomeMemoriesGameSystem.startGame();
                         
                         if (success) {
                             context.getSource().sendSuccess(
@@ -68,14 +68,14 @@ public class OMCommand {
                 // ========== /om stop ==========
                 .then(Commands.literal("stop")
                     .executes(context -> {
-                        if (!GameSystem.isGameActive()) {
+                        if (!OutcomeMemoriesGameSystem.isGameActive()) {
                             context.getSource().sendFailure(
                                 Component.literal("§c✗ No hay ningún juego activo")
                             );
                             return 0;
                         }
-                        
-                        GameSystem.forceEndGame();
+
+                        OutcomeMemoriesGameSystem.forceEndGame();
                         context.getSource().sendSuccess(
                             () -> Component.literal("§7Juego detenido manualmente"),
                             true
@@ -246,8 +246,8 @@ public class OMCommand {
                                 );
                                 return 0;
                             }
-                            
-                            ExitSystem.registerExit(
+
+                            OutcomeMemoriesGameSystem.registerExit(
                                 (net.minecraft.server.level.ServerLevel) player.level(),
                                 player.blockPosition()
                             );
@@ -263,7 +263,7 @@ public class OMCommand {
                     // /om exit list
                     .then(Commands.literal("list")
                         .executes(context -> {
-                            int count = ExitSystem.getExitCount();
+                            int count = OutcomeMemoriesGameSystem.getExitCount();
                             
                             if (count == 0) {
                                 context.getSource().sendSuccess(
@@ -277,8 +277,8 @@ public class OMCommand {
                                 () -> Component.literal("§e=== Salidas Registradas (" + count + ") ==="),
                                 false
                             );
-                            
-                            ExitSystem.listExits(context.getSource());
+
+                            OutcomeMemoriesGameSystem.listExits(context.getSource());
                             return 1;
                         })
                     )
@@ -286,7 +286,7 @@ public class OMCommand {
                     // /om exit clear
                     .then(Commands.literal("clear")
                         .executes(context -> {
-                            int count = ExitSystem.clearExits();
+                            int count = OutcomeMemoriesGameSystem.clearExits();
                             
                             context.getSource().sendSuccess(
                                 () -> Component.literal("§7Eliminadas " + count + " salidas"),
@@ -299,7 +299,7 @@ public class OMCommand {
                     // /om exit open
                     .then(Commands.literal("open")
                         .executes(context -> {
-                            ExitSystem.openAllExits();
+                            OutcomeMemoriesGameSystem.openAllExits();
                             context.getSource().sendSuccess(
                                 () -> Component.literal("§a✓ Todas las salidas abiertas"),
                                 true
@@ -311,7 +311,7 @@ public class OMCommand {
                     // /om exit close
                     .then(Commands.literal("close")
                         .executes(context -> {
-                            ExitSystem.closeAllExits();
+                            OutcomeMemoriesGameSystem.closeAllExits();
                             context.getSource().sendSuccess(
                                 () -> Component.literal("§c✓ Todas las salidas cerradas"),
                                 true
@@ -336,7 +336,7 @@ public class OMCommand {
                 // ========== /om debug ==========
                 .then(Commands.literal("debug")
                     .executes(context -> {
-                        GameSystem.GameState state = GameSystem.getCurrentState();
+                        OutcomeMemoriesGameSystem.GameState state = OutcomeMemoriesGameSystem.getCurrentState();
                         boolean lmsActive = LMSSystem.isLMSActive();
                         boolean exitPhase = LMSSystem.isExitPhaseActive();
                         
@@ -357,7 +357,7 @@ public class OMCommand {
                             false
                         );
                         context.getSource().sendSuccess(
-                            () -> Component.literal("§7Exits Registered: §f" + ExitSystem.getExitCount()),
+                            () -> Component.literal("§7Exits Registered: §f" + OutcomeMemoriesGameSystem.getExitCount()),
                             false
                         );
                         
@@ -388,7 +388,7 @@ public class OMCommand {
             
             // Si se convierte en exe, actualizar en GameSystem
             if (role == PlayerTypeOM.X2011) {
-                GameSystem.updateCurrentExecutioner(player.getUUID());
+                OutcomeMemoriesGameSystem.updateCurrentExecutioner(player.getUUID());
             }
             
             context.getSource().sendSuccess(
@@ -434,43 +434,64 @@ public class OMCommand {
             return 0;
         }
     }
-    
+
     private static int executeForceSwap(CommandContext<CommandSourceStack> context) {
         try {
             ServerPlayer exe = EntityArgument.getPlayer(context, "executioner");
             ServerPlayer survivor = EntityArgument.getPlayer(context, "survivor");
-            
+
             PlayerTypeOM exeType = PlayerRegistry.getPlayerType(exe);
             PlayerTypeOM survivorType = PlayerRegistry.getPlayerType(survivor);
-            
+
             if (exeType != PlayerTypeOM.X2011) {
                 context.getSource().sendFailure(
-                    Component.literal("§c✗ " + exe.getName().getString() + " no es un Executioner")
+                        Component.literal("§c✗ " + exe.getName().getString() + " no es un Executioner")
                 );
                 return 0;
             }
-            
+
             if (survivorType == PlayerTypeOM.X2011) {
                 context.getSource().sendFailure(
-                    Component.literal("§c✗ " + survivor.getName().getString() + " ya es un Executioner")
+                        Component.literal("§c✗ " + survivor.getName().getString() + " ya es un Executioner")
                 );
                 return 0;
             }
-            
-            // Forzar swap simulando un golpe
-            survivor.setHealth(1.0F);
-            RoleSwapSystem.performRoleSwap(exe, survivor);
-            
+
+            // Guardar el tipo anterior del exe
+            PlayerRegistry.savePreviousRole(exe.getUUID(), survivorType);
+
+            // Intercambiar roles manualmente
+            PlayerRegistry.setPlayerType(exe, survivorType);
+            PlayerRegistry.setPlayerType(survivor, PlayerTypeOM.X2011);
+
+            // Actualizar executioner actual en el GameSystem
+            OutcomeMemoriesGameSystem.updateCurrentExecutioner(survivor.getUUID());
+
+            // Restaurar salud
+            exe.setHealth(exe.getMaxHealth());
+            survivor.setHealth(survivor.getMaxHealth());
+
+            // Mensajes
+            exe.sendSystemMessage(Component.literal("§a§l¡Ahora eres SURVIVOR!"));
+            exe.sendSystemMessage(Component.literal("§7Personaje: §f" + survivorType.name()));
+
+            survivor.sendSystemMessage(Component.literal("§c§l¡Ahora eres EXECUTIONER!"));
+            survivor.sendSystemMessage(Component.literal("§7Elimina a todos los survivors"));
+
+            // Anuncio global
+            OutcomeMemoriesGameSystem.broadcastMessage("§e⚡ " + survivor.getName().getString() + " §7es ahora el §cExecutioner§7! (Comando admin)");
+
             context.getSource().sendSuccess(
-                () -> Component.literal("§a✓ Swap forzado entre " + 
-                    exe.getName().getString() + " y " + survivor.getName().getString()),
-                true
+                    () -> Component.literal("§a✓ Swap forzado entre " +
+                            exe.getName().getString() + " y " + survivor.getName().getString()),
+                    true
             );
-            
+
             return 1;
-            
+
         } catch (Exception e) {
             context.getSource().sendFailure(Component.literal("§c✗ Error: " + e.getMessage()));
+            e.printStackTrace();
             return 0;
         }
     }
@@ -483,12 +504,12 @@ public class OMCommand {
                     () -> Component.literal("§e=== Estadísticas Globales ==="),
                     false
                 );
-                
-                GameSystem.showAllStats(context.getSource());
+
+                OutcomeMemoriesGameSystem.showAllStats(context.getSource());
                 
             } else {
                 // Mostrar estadísticas de un jugador específico
-                GameSystem.PlayerStats stats = GameSystem.getPlayerStats(target.getUUID());
+                OutcomeMemoriesGameSystem.PlayerStats stats = OutcomeMemoriesGameSystem.getPlayerStats(target.getUUID());
                 
                 if (stats == null) {
                     context.getSource().sendFailure(
@@ -526,9 +547,7 @@ public class OMCommand {
             return 0;
         }
     }
-    
-    // ========== UTILIDADES ==========
-    
+
     private static String formatTime(long ms) {
         long seconds = ms / 1000;
         long minutes = seconds / 60;

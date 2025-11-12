@@ -6,15 +6,17 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import pe.elb.outcomememories.Outcomememories;
-import pe.elb.outcomememories.client.handlers.KnucklesClientHandler;
+import pe.elb.outcomememories.client.handlers.CharacterClientHandler;
 import pe.elb.outcomememories.game.PlayerTypeOM;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.net.NetworkHandler;
 import pe.elb.outcomememories.net.skills.amy.AmySkillPacket;
+import pe.elb.outcomememories.net.skills.blaze.BlazeSkillPacket;
 import pe.elb.outcomememories.net.skills.cream.CreamSkillPacket;
 import pe.elb.outcomememories.net.skills.eggman.EggmanSkillPacket;
 import pe.elb.outcomememories.net.skills.exe.ExeSkillPacket;
 import pe.elb.outcomememories.net.skills.knuckles.KnucklesSkillPacket;
+import pe.elb.outcomememories.net.skills.metalsonic.MetalSonicSkillPacket;
 import pe.elb.outcomememories.net.skills.sonic.SonicSkillPacket;
 import pe.elb.outcomememories.net.skills.tails.TailsSkillPacket;
 
@@ -57,6 +59,8 @@ public class CharacterKeybindHandler {
             case EGGMAN -> NetworkHandler.CHANNEL.sendToServer(new EggmanSkillPacket(EggmanSkillPacket.SkillType.SHIELD));
             case SONIC -> NetworkHandler.CHANNEL.sendToServer(new SonicSkillPacket(SonicSkillPacket.SkillType.PEELOUT));
             case KNUCKLES -> NetworkHandler.CHANNEL.sendToServer(new KnucklesSkillPacket(KnucklesSkillPacket.SkillType.COUNTER));
+            case METAL_SONIC -> NetworkHandler.CHANNEL.sendToServer(new MetalSonicSkillPacket(MetalSonicSkillPacket.SkillType.CHARGE));
+            case BLAZE -> NetworkHandler.CHANNEL.sendToServer(new BlazeSkillPacket(BlazeSkillPacket.SkillType.SOL_FLAME));
         }
     }
 
@@ -68,9 +72,12 @@ public class CharacterKeybindHandler {
             case TAILS -> NetworkHandler.CHANNEL.sendToServer(new TailsSkillPacket(TailsSkillPacket.SkillType.GLIDE_START));
             case EGGMAN -> NetworkHandler.CHANNEL.sendToServer(new EggmanSkillPacket(EggmanSkillPacket.SkillType.BOOST));
             case SONIC -> NetworkHandler.CHANNEL.sendToServer(new SonicSkillPacket(SonicSkillPacket.SkillType.DROPDASH));
+
             case KNUCKLES -> {NetworkHandler.CHANNEL.sendToServer(new KnucklesSkillPacket(KnucklesSkillPacket.SkillType.PUNCH_START));
-                KnucklesClientHandler.setChargingPunch(true);
+                CharacterClientHandler.setChargingPunch(true);
             }
+            case METAL_SONIC -> NetworkHandler.CHANNEL.sendToServer(new MetalSonicSkillPacket(MetalSonicSkillPacket.SkillType.REPAIR));
+            case BLAZE -> NetworkHandler.CHANNEL.sendToServer(new BlazeSkillPacket(BlazeSkillPacket.SkillType.ROUNDHOUSE));
         }
     }
 

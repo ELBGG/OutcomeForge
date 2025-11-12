@@ -161,6 +161,14 @@ public class LMSClientHandler {
                 currentBPM = 178.0F;
                 zoomIntensity = 0.1F;
             }
+            case "blazelms" -> {
+                currentBPM = 168.0F;
+                zoomIntensity = 0.1F;
+            }
+            case "metalsoniclms" -> {
+                currentBPM = 154.0F;
+                zoomIntensity = 0.1F;
+            }
             default -> {
                 currentBPM = 140.0F;
                 zoomIntensity = 0.1F;

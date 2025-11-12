@@ -3,8 +3,8 @@ package pe.elb.outcomememories.events;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import pe.elb.outcomememories.game.game.GameSystem;
 import pe.elb.outcomememories.game.game.LMSSystem;
+import pe.elb.outcomememories.game.game.OutcomeMemoriesGameSystem;
 
 /**
  * Sistema de integración con FujiTimer (plugin de Bukkit)
@@ -49,7 +49,7 @@ public class TimerIntegration {
         switch (command) {
             case MARKER_START -> {
                 // Iniciar el juego
-                boolean started = GameSystem.startGame();
+                boolean started = OutcomeMemoriesGameSystem.startGame();
                 if (started) {
                     System.out.println("[OutcomeMemories] Game started by FujiTimer");
                     threeMinutesNotified = false;
@@ -58,7 +58,7 @@ public class TimerIntegration {
             
             case MARKER_FINISH -> {
                 // Terminar el juego - survivors ganan
-                GameSystem.endGameSurvivorsWin();
+                OutcomeMemoriesGameSystem.endGameSurvivorsWin();
                 System.out.println("[OutcomeMemories] Game ended by FujiTimer - Survivors Win");
                 threeMinutesNotified = false;
             }
@@ -86,11 +86,11 @@ public class TimerIntegration {
      * Notifica a todos los jugadores sobre los últimos 3 minutos
      */
     private static void notifyLastThreeMinutes() {
-        GameSystem.broadcastMessage("§c§l========================================");
-        GameSystem.broadcastMessage("§e§l   ¡ÚLTIMOS 3 MINUTOS!");
-        GameSystem.broadcastMessage("§7Las habilidades ahora tienen buffs especiales");
-        GameSystem.broadcastMessage("§c§l========================================");
-        GameSystem.playGlobalSound(net.minecraft.sounds.SoundEvents.ENDER_DRAGON_GROWL, 1.0F, 1.0F);
+        OutcomeMemoriesGameSystem.broadcastMessage("§c§l========================================");
+        OutcomeMemoriesGameSystem.broadcastMessage("§e§l   ¡ÚLTIMOS 3 MINUTOS!");
+        OutcomeMemoriesGameSystem.broadcastMessage("§7Las habilidades ahora tienen buffs especiales");
+        OutcomeMemoriesGameSystem.broadcastMessage("§c§l========================================");
+        OutcomeMemoriesGameSystem.playGlobalSound(net.minecraft.sounds.SoundEvents.ENDER_DRAGON_GROWL, 1.0F, 1.0F);
     }
     
     /**

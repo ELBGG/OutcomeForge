@@ -27,12 +27,14 @@
     {
       "text": "[dark_purple]POI[/]",
       "duration": 15,
-      "scale": 2.3
+      "scale": 2.3,
+      "font": "serified"
     },
     {
       "text": "[dark_purple]POISON[/]",
       "duration": 40,
-      "scale": 2.3
+      "scale": 2.3,
+      "font": "serified"
     },
     {
       "pause": true,
@@ -51,7 +53,8 @@
     {
       "text": "[light_purple]DARK[/]",
       "duration": 50,
-      "scale": 2.3
+      "scale": 2.3,
+      "font": "serified"
     },
     {
       "stop": true

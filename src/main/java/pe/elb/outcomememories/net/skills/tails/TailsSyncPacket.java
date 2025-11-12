@@ -3,7 +3,7 @@ package pe.elb.outcomememories.net.skills.tails;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import pe.elb.outcomememories.client.cache.TailsClientCache;
+import pe.elb.outcomememories.client.cache.PlayerSkillsClientCache;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -69,11 +69,11 @@ public class TailsSyncPacket {
         ctx.get().enqueueWork(() -> {
             Minecraft.getInstance().execute(() -> {
                 switch (msg.syncType) {
-                    case GLIDE_ENERGY -> TailsClientCache.updateGlideData(
+                    case GLIDE_ENERGY -> PlayerSkillsClientCache.updateGlideData(
                         msg.playerUUID, msg.floatData, msg.booleanData
                     );
                     
-                    case LASER_STATE -> TailsClientCache.updateLaserData(
+                    case LASER_STATE -> PlayerSkillsClientCache.updateLaserData(
                         msg.playerUUID, msg.stringData, msg.floatData
                     );
                 }

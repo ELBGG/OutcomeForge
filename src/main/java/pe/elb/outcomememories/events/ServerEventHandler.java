@@ -10,9 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.elb.outcomememories.Outcomememories;
 import pe.elb.outcomememories.game.PlayerTypeOM;
-import pe.elb.outcomememories.game.game.ExitSystem;
 import pe.elb.outcomememories.game.game.LMSSystem;
-import pe.elb.outcomememories.game.game.PlayerDefineSuvivor;
+import pe.elb.outcomememories.game.game.OutcomeMemoriesGameSystem;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.game.skills.SonicSkillsSystem;
 import pe.elb.outcomememories.net.NetworkHandler;
@@ -79,7 +78,7 @@ public class ServerEventHandler {
         }
 
         // 4️⃣ Si es Sonic, sincronizar Dodge Meter
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def != null && def.getType() == PlayerTypeOM.SONIC) {
             float dodgeHP = SonicSkillsSystem.getDodgeHP(player.getUUID());
             NetworkHandler.CHANNEL.send(
@@ -109,7 +108,7 @@ public class ServerEventHandler {
         if (type == PlayerTypeOM.X2011) return;
         
         // Verificar si está en una salida
-        if (ExitSystem.isPlayerAtExit(player)) {
+        if (OutcomeMemoriesGameSystem.isPlayerAtExit(player)) {
             LOGGER.info("[ServerEvents] Survivor {} llegó a la salida durante LMS!", 
                 player.getGameProfile().getName());
             LMSSystem.onSurvivorEscaped(player);

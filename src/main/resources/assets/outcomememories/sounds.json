@@ -52,5 +52,23 @@
         "stream": true
       }
     ]
-  }
+  },
+   "blazelms": {
+     "category": "ambient",
+     "sounds": [
+       {
+         "name": "outcomememories:blazelms",
+         "stream": true
+       }
+     ]
+   },
+   "metalsoniclms": {
+     "category": "ambient",
+     "sounds": [
+       {
+         "name": "outcomememories:metalsoniclms",
+         "stream": true
+       }
+     ]
+   }
 }

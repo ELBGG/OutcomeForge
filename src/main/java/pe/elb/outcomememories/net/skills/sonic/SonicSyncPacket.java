@@ -3,7 +3,7 @@ package pe.elb.outcomememories.net.skills.sonic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import pe.elb.outcomememories.client.cache.DodgeMeterClientCache;
+import pe.elb.outcomememories.client.cache.PlayerSkillsClientCache;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -30,7 +30,7 @@ public class SonicSyncPacket {
     public static void handle(SonicSyncPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             Minecraft.getInstance().execute(() -> {
-                DodgeMeterClientCache.updateDodgeHP(msg.playerUUID, msg.dodgeHP);
+                PlayerSkillsClientCache.updateDodgeHP(msg.playerUUID, msg.dodgeHP);
             });
         });
         ctx.get().setPacketHandled(true);

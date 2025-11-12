@@ -3,7 +3,7 @@ package pe.elb.outcomememories.net.skills.exe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import pe.elb.outcomememories.client.cache.InvisibilityClientCache;
+import pe.elb.outcomememories.client.cache.PlayerSkillsClientCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class ExeSyncPacket {
         ctx.get().enqueueWork(() -> {
             Minecraft.getInstance().execute(() -> {
                 if (msg.syncType == SyncType.INVISIBILITY_NEARBY) {
-                    InvisibilityClientCache.updateNearbySurvivors(msg.nearbySurvivors);
+                    PlayerSkillsClientCache.updateNearbySurvivors(msg.nearbySurvivors);
                 }
             });
         });

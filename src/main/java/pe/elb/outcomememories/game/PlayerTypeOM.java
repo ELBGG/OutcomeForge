@@ -8,5 +8,7 @@ public enum PlayerTypeOM {
     CREAM,
     EGGMAN,
     X2011,
+    METAL_SONIC,
+    BLAZE,
     NONE
 }

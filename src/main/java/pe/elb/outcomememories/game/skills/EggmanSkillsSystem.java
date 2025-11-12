@@ -21,22 +21,14 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import pe.elb.outcomememories.client.input.KeyBindings;
 import pe.elb.outcomememories.game.PlayerTypeOM;
-import pe.elb.outcomememories.game.game.PlayerDefineSuvivor;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.net.NetworkHandler;
 import pe.elb.outcomememories.net.packets.CooldownSyncPacket;
+import pe.elb.outcomememories.net.skills.eggman.EggmanSyncPacket;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Sistema unificado de habilidades de Eggman
- * 
- * Habilidades:
- * - Energy Shield (Q): Escudo que stunnea al atacante
- * - Jetpack Boost (E): Boost de velocidad con partículas
- * - Double Jump (SPACE): Doble salto en el aire
- */
 @Mod.EventBusSubscriber(modid = "outcomememories", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EggmanSkillsSystem {
 
@@ -79,7 +71,7 @@ public class EggmanSkillsSystem {
     public static boolean tryUseShield(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.EGGMAN) {
             return false;
         }
@@ -101,6 +93,16 @@ public class EggmanSkillsSystem {
         activeShields.put(puid, new ShieldData(now, expiresAt));
 
         syncCooldown(player, "eggman_shield", SHIELD_COOLDOWN_SUCCESS_MS, now);
+
+        // ✅ Enviar packet de activación del escudo a todos los clientes cercanos
+        try {
+            NetworkHandler.CHANNEL.send(
+                    PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+                    new EggmanSyncPacket(puid, EggmanSyncPacket.SyncType.SHIELD_ACTIVE, true, now)
+            );
+        } catch (Throwable e) {
+            System.err.println("[EggmanSkills] Error enviando packet de escudo: " + e.getMessage());
+        }
 
         // Efectos
         if (player.level() instanceof ServerLevel serverLevel) {
@@ -157,7 +159,7 @@ public class EggmanSkillsSystem {
     public static boolean tryUseBoost(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.EGGMAN) {
             return false;
         }
@@ -187,9 +189,9 @@ public class EggmanSkillsSystem {
         Vec3 horizontalDir = new Vec3(look.x, 0, look.z).normalize();
         Vec3 boost = horizontalDir.scale(BOOST_INITIAL_IMPULSE);
         player.setDeltaMovement(player.getDeltaMovement().add(boost));
-        
-        try { 
-            player.hurtMarked = true; 
+
+        try {
+            player.hurtMarked = true;
         } catch (Throwable ignored) {}
 
         boostActiveTicks.put(puid, BOOST_DURATION_TICKS);
@@ -222,7 +224,7 @@ public class EggmanSkillsSystem {
     public static boolean tryUseDoubleJump(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.EGGMAN) {
             return false;
         }
@@ -295,6 +297,16 @@ public class EggmanSkillsSystem {
         activeShields.remove(puid);
         shieldLastUsed.put(puid, System.currentTimeMillis());
 
+        // ✅ Enviar packet de ruptura del escudo
+        try {
+            NetworkHandler.CHANNEL.send(
+                    PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+                    new EggmanSyncPacket(puid, EggmanSyncPacket.SyncType.SHIELD_BROKEN, false, 0L)
+            );
+        } catch (Throwable e) {
+            System.err.println("[EggmanSkills] Error enviando packet de ruptura: " + e.getMessage());
+        }
+
         // Efectos de ruptura
         if (player.level() instanceof ServerLevel serverLevel) {
             serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -324,7 +336,7 @@ public class EggmanSkillsSystem {
         if (event.player.level().isClientSide) return;
         if (!(event.player instanceof ServerPlayer player)) return;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.EGGMAN) return;
 
         tickBoost(player);
@@ -346,6 +358,15 @@ public class EggmanSkillsSystem {
             ServerPlayer player = findPlayerByUUID(puid);
             if (player == null || !player.isAlive()) {
                 it.remove();
+
+                // ✅ Enviar packet de desactivación si el jugador se desconecta/muere
+                try {
+                    NetworkHandler.CHANNEL.send(
+                            PacketDistributor.ALL.noArg(),
+                            new EggmanSyncPacket(puid, EggmanSyncPacket.SyncType.SHIELD_BROKEN, false, 0L)
+                    );
+                } catch (Throwable ignored) {}
+
                 continue;
             }
 
@@ -354,8 +375,8 @@ public class EggmanSkillsSystem {
             // Advertencias sonoras
             if (timeLeft <= 1000 && timeLeft > 950) {
                 if (player.level() instanceof ServerLevel serverLevel) {
-                    serverLevel.playSound(null, player.blockPosition(), 
-                        SoundEvents.NOTE_BLOCK_PLING.value(), SoundSource.PLAYERS, 0.7F, 1.8F);
+                    serverLevel.playSound(null, player.blockPosition(),
+                            SoundEvents.NOTE_BLOCK_PLING.value(), SoundSource.PLAYERS, 0.7F, 1.8F);
                     serverLevel.sendParticles(ParticleTypes.END_ROD,
                             player.getX(), player.getY() + 1.0, player.getZ(),
                             15, 0.4, 0.6, 0.4, 0.05);
@@ -364,14 +385,24 @@ public class EggmanSkillsSystem {
 
             if (timeLeft <= 500 && timeLeft > 450) {
                 if (player.level() instanceof ServerLevel serverLevel) {
-                    serverLevel.playSound(null, player.blockPosition(), 
-                        SoundEvents.NOTE_BLOCK_PLING.value(), SoundSource.PLAYERS, 0.7F, 1.8F);
+                    serverLevel.playSound(null, player.blockPosition(),
+                            SoundEvents.NOTE_BLOCK_PLING.value(), SoundSource.PLAYERS, 0.7F, 1.8F);
                 }
             }
 
             // Expirar shield
             if (now >= shield.expiresAt) {
                 it.remove();
+
+                // ✅ Enviar packet de expiración
+                try {
+                    NetworkHandler.CHANNEL.send(
+                            PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+                            new EggmanSyncPacket(puid, EggmanSyncPacket.SyncType.SHIELD_BROKEN, false, 0L)
+                    );
+                } catch (Throwable e) {
+                    System.err.println("[EggmanSkills] Error enviando packet de expiración: " + e.getMessage());
+                }
 
                 // Si no fue golpeado, cooldown reducido
                 if (!shield.wasHit) {
@@ -380,8 +411,8 @@ public class EggmanSkillsSystem {
                 }
 
                 if (player.level() instanceof ServerLevel serverLevel) {
-                    serverLevel.playSound(null, player.blockPosition(), 
-                        SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0F, 0.8F);
+                    serverLevel.playSound(null, player.blockPosition(),
+                            SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0F, 0.8F);
                 }
             } else {
                 // Partículas del escudo activo
@@ -475,9 +506,9 @@ public class EggmanSkillsSystem {
 
     private static void stunAttacker(ServerPlayer defender, LivingEntity attacker) {
         // Determinar duración del stun
-        int stunTicks = isInLastThreeMinutes(defender.level()) 
-            ? SHIELD_STUN_LAST_TICKS 
-            : SHIELD_STUN_NORMAL_TICKS;
+        int stunTicks = isInLastThreeMinutes(defender.level())
+                ? SHIELD_STUN_LAST_TICKS
+                : SHIELD_STUN_NORMAL_TICKS;
 
         // Aplicar stun
         if (attacker instanceof Mob mob) {
@@ -492,8 +523,8 @@ public class EggmanSkillsSystem {
 
         // Efectos visuales
         if (attacker.level() instanceof ServerLevel serverLevel) {
-            serverLevel.playSound(null, attacker.blockPosition(), 
-                SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 1.0F, 0.8F);
+            serverLevel.playSound(null, attacker.blockPosition(),
+                    SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 1.0F, 0.8F);
             serverLevel.sendParticles(ParticleTypes.CRIT,
                     attacker.getX(), attacker.getY() + 1.0, attacker.getZ(),
                     15, 0.3, 0.5, 0.3, 0.05);
@@ -523,8 +554,8 @@ public class EggmanSkillsSystem {
     private static void syncCooldown(ServerPlayer player, String skillId, long cooldownMs, long now) {
         try {
             NetworkHandler.CHANNEL.send(
-                PacketDistributor.PLAYER.with(() -> player),
-                new CooldownSyncPacket(skillId, cooldownMs, now)
+                    PacketDistributor.PLAYER.with(() -> player),
+                    new CooldownSyncPacket(skillId, cooldownMs, now)
             );
         } catch (Throwable ignored) {}
     }
@@ -532,6 +563,7 @@ public class EggmanSkillsSystem {
     // ============ LIMPIEZA ============
 
     public static void cleanup(UUID playerUUID) {
+        // Limpiar datos del servidor
         shieldLastUsed.remove(playerUUID);
         activeShields.remove(playerUUID);
         boostLastUsed.remove(playerUUID);
@@ -539,6 +571,14 @@ public class EggmanSkillsSystem {
         doubleJumpLastUsed.remove(playerUUID);
         hasDoubleJumped.remove(playerUUID);
         wasOnGround.remove(playerUUID);
+
+        // ✅ Enviar packet para limpiar en todos los clientes
+        try {
+            NetworkHandler.CHANNEL.send(
+                    PacketDistributor.ALL.noArg(),
+                    new EggmanSyncPacket(playerUUID, EggmanSyncPacket.SyncType.SHIELD_BROKEN, false, 0L)
+            );
+        } catch (Throwable ignored) {}
     }
 
     // ============ GETTERS DE COOLDOWN ============

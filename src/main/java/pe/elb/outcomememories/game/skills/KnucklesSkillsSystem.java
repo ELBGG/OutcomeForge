@@ -27,7 +27,6 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import pe.elb.outcomememories.client.input.KeyBindings;
 import pe.elb.outcomememories.game.PlayerTypeOM;
-import pe.elb.outcomememories.game.game.PlayerDefineSuvivor;
 import pe.elb.outcomememories.game.game.PlayerRegistry;
 import pe.elb.outcomememories.net.NetworkHandler;
 import pe.elb.outcomememories.net.packets.CooldownSyncPacket;
@@ -94,7 +93,7 @@ public class KnucklesSkillsSystem {
     public static boolean tryUsePunch(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.KNUCKLES) return false;
 
         UUID puid = player.getUUID();
@@ -184,7 +183,7 @@ public class KnucklesSkillsSystem {
     public static boolean tryUseCounter(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.KNUCKLES) return false;
 
         UUID puid = player.getUUID();
@@ -233,7 +232,7 @@ public class KnucklesSkillsSystem {
     public static boolean tryWallCling(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.KNUCKLES) return false;
 
         if (player.onGround()) return false;
@@ -297,7 +296,7 @@ public class KnucklesSkillsSystem {
     public static boolean startGlide(ServerPlayer player) {
         if (player == null || player.level().isClientSide) return false;
 
-        PlayerDefineSuvivor def = PlayerRegistry.get(player);
+        PlayerRegistry.PlayerDefinition def = PlayerRegistry.get(player);
         if (def == null || def.getType() != PlayerTypeOM.KNUCKLES) return false;
 
         if (player.onGround()) return false;
